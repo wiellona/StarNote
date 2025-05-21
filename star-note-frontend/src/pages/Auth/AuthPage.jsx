@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { authService } from "../../utils/authService";
+import { toast } from "react-hot-toast";
 import "./AuthPage.css";
 
 const AuthPage = ({ onLogin, isAuthenticated }) => {
@@ -67,20 +69,45 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Mock authentication - in a real app, this would call an API
-      const userData = {
-        id: Date.now().toString(),
-        name: formData.name || "User",
-        email: formData.email,
-      };
+      try {
+        let userData;
 
-      onLogin(userData);
-      navigate("/dashboard");
+        if (isSignUp) {
+          // Register new user
+          userData = await authService.register({
+            username: formData.name,
+            email: formData.email,
+            password: formData.password,
+          });
+          toast.success("Account created successfully");
+
+          // After registration, automatically log in
+          await authService.login({
+            email: formData.email,
+            password: formData.password,
+          });
+        } else {
+          // Login existing user
+          userData = await authService.login({
+            email: formData.email,
+            password: formData.password,
+          });
+          toast.success("Login successful");
+        }
+
+        onLogin(userData.user);
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Authentication error:", error);
+        const errorMessage =
+          error.response?.data?.message ||
+          (isSignUp ? "Registration failed" : "Login failed");
+        toast.error(errorMessage);
+      }
     }
   };
 

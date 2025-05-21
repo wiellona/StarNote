@@ -10,6 +10,8 @@ import {
   FiPause,
 } from "react-icons/fi";
 import Flashcard from "../../components/Flashcard/Flashcard";
+import { flashcardService } from "../../utils/api";
+import { toast } from "react-hot-toast";
 import "./FlashcardsPage.css";
 
 const FlashcardsPage = ({ isAuthenticated }) => {
@@ -30,7 +32,6 @@ const FlashcardsPage = ({ isAuthenticated }) => {
   const [currentCard, setCurrentCard] = useState(null);
   const [isStudyMode, setIsStudyMode] = useState(false);
   const [currentStudyIndex, setCurrentStudyIndex] = useState(0);
-
   // Redirect if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
@@ -38,51 +39,46 @@ const FlashcardsPage = ({ isAuthenticated }) => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Mock data fetch - in a real app, this would come from an API
-  useEffect(() => {
-    // Mock data
-    const mockFlashcards = [
-      {
-        id: "1",
-        question: "What is React?",
-        answer: "A JavaScript library for building user interfaces",
-        category: "Programming",
-      },
-      {
-        id: "2",
-        question: "What is the capital of France?",
-        answer: "Paris",
-        category: "History",
-      },
-      {
-        id: "3",
-        question: "What is the formula for the area of a circle?",
-        answer: "A = πr²",
-        category: "Math",
-      },
-      {
-        id: "4",
-        question: "What is the difference between let and const in JavaScript?",
-        answer: "let allows reassignment, const does not allow reassignment",
-        category: "Programming",
-      },
-      {
-        id: "5",
-        question: "What are the first 10 digits of Pi?",
-        answer: "3.1415926535",
-        category: "Math",
-      },
-      {
-        id: "6",
-        question: 'What is the meaning of "bonjour"?',
-        answer: "Hello (in French)",
-        category: "Language",
-      },
-    ];
+  // Fetch flashcards from API
+  const fetchFlashcards = async () => {
+    try {
+      const data = await flashcardService.getAllFlashcards(
+        activeCategory !== "All" ? activeCategory : null,
+        searchTerm || null
+      );
+      setFlashcards(data);
+      setFilteredCards(data);
+    } catch (error) {
+      console.error("Error fetching flashcards:", error);
+      toast.error("Failed to load flashcards");
+    }
+  };
 
-    setFlashcards(mockFlashcards);
-    setFilteredCards(mockFlashcards);
-  }, []);
+  // Fetch categories
+  const fetchCategories = async () => {
+    try {
+      const data = await flashcardService.getCategories();
+      setCategories(["All", ...data]);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      // Keep default categories if API call fails
+    }
+  };
+
+  // Initial data loading
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchFlashcards();
+      fetchCategories();
+    }
+  }, [isAuthenticated]);
+
+  // Re-fetch when search or category changes
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchFlashcards();
+    }
+  }, [activeCategory, searchTerm, isAuthenticated]);
 
   useEffect(() => {
     let result = [...flashcards];
@@ -111,10 +107,8 @@ const FlashcardsPage = ({ isAuthenticated }) => {
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
-
   const handleCreateCard = () => {
     const newCard = {
-      id: Date.now().toString(),
       question: "",
       answer: "",
       category: "Programming",
@@ -130,26 +124,61 @@ const FlashcardsPage = ({ isAuthenticated }) => {
     setIsEditing(true);
     setIsStudyMode(false);
   };
-
-  const handleDeleteCard = (id) => {
-    setFlashcards(flashcards.filter((card) => card.id !== id));
+  const handleDeleteCard = async (id) => {
+    try {
+      await flashcardService.deleteFlashcard(id);
+      setFlashcards(flashcards.filter((card) => card._id !== id));
+      setFilteredCards(filteredCards.filter((card) => card._id !== id));
+      toast.success("Flashcard deleted successfully");
+    } catch (error) {
+      console.error("Error deleting flashcard:", error);
+      toast.error("Failed to delete flashcard");
+    }
   };
-
-  const handleSaveCard = () => {
+  const handleSaveCard = async () => {
     if (!currentCard.question.trim() || !currentCard.answer.trim()) {
-      alert("Please provide both a question and an answer");
+      toast.error("Please provide both a question and an answer");
       return;
     }
 
-    const updatedCards = currentCard.id
-      ? flashcards.map((card) =>
-          card.id === currentCard.id ? currentCard : card
-        )
-      : [...flashcards, { ...currentCard, id: Date.now().toString() }];
+    try {
+      let savedCard;
 
-    setFlashcards(updatedCards);
-    setIsEditing(false);
-    setCurrentCard(null);
+      if (currentCard._id) {
+        // Update existing card
+        savedCard = await flashcardService.updateFlashcard(currentCard._id, {
+          question: currentCard.question,
+          answer: currentCard.answer,
+          category: currentCard.category,
+        });
+
+        setFlashcards(
+          flashcards.map((card) =>
+            card._id === currentCard._id ? savedCard : card
+          )
+        );
+        toast.success("Flashcard updated successfully");
+      } else {
+        // Create new card
+        savedCard = await flashcardService.createFlashcard({
+          question: currentCard.question,
+          answer: currentCard.answer,
+          category: currentCard.category,
+        });
+
+        setFlashcards([...flashcards, savedCard]);
+        toast.success("Flashcard created successfully");
+      }
+
+      setIsEditing(false);
+      setCurrentCard(null);
+
+      // Refresh the list to ensure we have the latest data
+      fetchFlashcards();
+    } catch (error) {
+      console.error("Error saving flashcard:", error);
+      toast.error("Failed to save flashcard");
+    }
   };
 
   const handleCancelEdit = () => {
@@ -174,8 +203,16 @@ const FlashcardsPage = ({ isAuthenticated }) => {
     setIsStudyMode(false);
     setCurrentStudyIndex(0);
   };
+  const nextCard = async () => {
+    const currentCardId = filteredCards[currentStudyIndex]._id;
+    try {
+      // Track that the card has been reviewed
+      await flashcardService.trackReview(currentCardId);
+    } catch (error) {
+      console.error("Error tracking flashcard review:", error);
+    }
 
-  const nextCard = () => {
+    // Move to the next card
     setCurrentStudyIndex((prev) => (prev + 1) % filteredCards.length);
   };
 
@@ -355,7 +392,7 @@ const FlashcardsPage = ({ isAuthenticated }) => {
             {filteredCards.length > 0 ? (
               filteredCards.map((card) => (
                 <Flashcard
-                  key={card.id}
+                  key={card._id}
                   flashcard={card}
                   onDelete={handleDeleteCard}
                   onEdit={handleEditCard}

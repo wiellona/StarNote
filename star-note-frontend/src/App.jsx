@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserProvider } from "./contexts/UserContext";
+import { authService } from "./utils/authService";
+import { Toaster } from "react-hot-toast";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import LandingPage from "./pages/Landing/LandingPage";
@@ -14,21 +16,22 @@ import FlashcardsPage from "./pages/Flashcards/FlashcardsPage";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Mock authentication - in a real app, this would be handled via a proper auth system
+  // Check authentication status when app loads
   useEffect(() => {
-    const user = localStorage.getItem("starnote-user");
-    if (user) {
-      setIsAuthenticated(true);
-    }
+    const checkAuth = () => {
+      const isAuth = authService.isAuthenticated();
+      setIsAuthenticated(isAuth);
+    };
+
+    checkAuth();
   }, []);
 
   const handleLogin = (userData) => {
-    localStorage.setItem("starnote-user", JSON.stringify(userData));
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("starnote-user");
+    authService.logout();
     setIsAuthenticated(false);
   };
   return (
@@ -37,35 +40,37 @@ function App() {
         <div className="app">
           <div className="star-bg"></div>
           <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/dashboard"
-            element={<DashboardPage isAuthenticated={isAuthenticated} />}
-          />
-          <Route
-            path="/auth"
-            element={
-              <AuthPage
-                onLogin={handleLogin}
-                isAuthenticated={isAuthenticated}
-              />
-            }
-          />
-          <Route
-            path="/notes"
-            element={<NotesPage isAuthenticated={isAuthenticated} />}
-          />
-          <Route
-            path="/pomodoro"
-            element={<PomodoroPage isAuthenticated={isAuthenticated} />}
-          />
-          <Route
-            path="/flashcards"
-            element={<FlashcardsPage isAuthenticated={isAuthenticated} />}
-          />
-        </Routes>        <Footer />
-      </div>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/dashboard"
+              element={<DashboardPage isAuthenticated={isAuthenticated} />}
+            />
+            <Route
+              path="/auth"
+              element={
+                <AuthPage
+                  onLogin={handleLogin}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            />
+            <Route
+              path="/notes"
+              element={<NotesPage isAuthenticated={isAuthenticated} />}
+            />
+            <Route
+              path="/pomodoro"
+              element={<PomodoroPage isAuthenticated={isAuthenticated} />}
+            />
+            <Route
+              path="/flashcards"
+              element={<FlashcardsPage isAuthenticated={isAuthenticated} />}
+            />
+          </Routes>
+          <Footer />
+          <Toaster position="top-right" />
+        </div>
       </UserProvider>
     </ThemeProvider>
   );

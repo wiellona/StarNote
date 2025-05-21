@@ -8,10 +8,9 @@ const Flashcard = ({ flashcard, onDelete, onEdit }) => {
   const handleFlip = () => {
     setFlipped(!flipped);
   };
-
   const handleDelete = (e) => {
     e.stopPropagation();
-    onDelete(flashcard.id);
+    onDelete(flashcard._id);
   };
 
   const handleEdit = (e) => {
