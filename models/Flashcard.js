@@ -1,21 +1,14 @@
 const mongoose = require("mongoose");
 
-const noteSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
+const flashcardSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  cover_image: {
+  content: {
     type: String,
+    required: true,
   },
   status: {
     type: String,
@@ -32,11 +25,10 @@ const noteSchema = new mongoose.Schema({
   },
 });
 
-// Middleware to update the updatedAt field on save
-noteSchema.pre("save", function (next) {
+flashcardSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-const Note = mongoose.model("Note", noteSchema);
-module.exports = Note;
+const Flashcard = mongoose.model("Flashcard", flashcardSchema);
+module.exports = Flashcard;
