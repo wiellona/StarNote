@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiTrash, FiStar, FiEdit, FiMoreVertical } from "react-icons/fi";
+import { FiTrash, FiStar, FiEdit, FiMoreVertical, FiImage } from "react-icons/fi";
 import { formatText, stripFormatting } from "../../utils/formatText";
 import "./NoteCard.css";
 
@@ -37,9 +37,14 @@ const NoteCard = ({ note, onDelete, onToggleFavorite, onEdit }) => {
       ? plainText.substring(0, maxLength) + "..."
       : plainText;
   };
-
   return (
     <div className="note-card" onClick={handleEdit}>
+      {note.coverImage && (
+        <div className="note-cover-image">
+          <img src={note.coverImage} alt={note.title} />
+        </div>
+      )}
+      
       {note.category && <div className="note-category">{note.category}</div>}
 
       <h3 className="note-title">{truncateText(note.title, 50)}</h3>

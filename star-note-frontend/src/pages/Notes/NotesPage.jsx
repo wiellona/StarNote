@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import NoteCard from "../../components/NoteCard/NoteCard";
 import TextFormatToolbar from "../../components/TextFormatToolbar/TextFormatToolbar";
+import ImageUploader from "../../components/ImageUploader/ImageUploader";
 import { formatText } from "../../utils/formatText";
 import "./NotesPage.css";
 
@@ -39,7 +40,6 @@ const NotesPage = ({ isAuthenticated }) => {
       navigate("/auth");
     }
   }, [isAuthenticated, navigate]);
-
   // Mock data fetch - in a real app, this would come from an API
   useEffect(() => {    // Mock data
     const mockNotes = [
@@ -51,6 +51,7 @@ const NotesPage = ({ isAuthenticated }) => {
         category: "Work",
         isFavorite: true,
         updatedAt: new Date().toISOString(),
+        coverImage: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
       },
       {
         id: "2",
@@ -60,6 +61,7 @@ const NotesPage = ({ isAuthenticated }) => {
         category: "Programming",
         isFavorite: false,
         updatedAt: new Date(Date.now() - 86400000).toISOString(),
+        coverImage: "https://res.cloudinary.com/demo/image/upload/v1312461204/code-sample.jpg",
       },
       {
         id: "3",
@@ -131,7 +133,6 @@ const NotesPage = ({ isAuthenticated }) => {
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
   };
-
   const handleCreateNote = () => {
     const newNote = {
       id: Date.now().toString(),
@@ -140,6 +141,7 @@ const NotesPage = ({ isAuthenticated }) => {
       category: "Personal",
       isFavorite: false,
       updatedAt: new Date().toISOString(),
+      coverImage: null,
     };
 
     setCurrentNote(newNote);
@@ -400,6 +402,20 @@ const NotesPage = ({ isAuthenticated }) => {
     }
   };
 
+  const handleCursorPosition = (e) => {
+    setCursorPosition(e.target.selectionStart);
+  };
+
+  // Add new handler for cover image upload
+  const handleCoverImageUpload = (imageUrl) => {
+    setCurrentNote({ ...currentNote, coverImage: imageUrl });
+  };
+
+  // Add new handler for cover image removal
+  const handleCoverImageRemove = () => {
+    setCurrentNote({ ...currentNote, coverImage: null });
+  };
+
   return (
     <div className="notes-page page">
       <div className="container">
@@ -468,9 +484,7 @@ const NotesPage = ({ isAuthenticated }) => {
                   <FiSave /> Save
                 </button>
               </div>
-            </div>
-
-            <div className="editor-form">
+            </div>            <div className="editor-form">
               <div className="form-group">
                 <input
                   type="text"
@@ -479,6 +493,14 @@ const NotesPage = ({ isAuthenticated }) => {
                   value={currentNote.title}
                   onChange={handleNoteChange}
                   className="note-title-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <ImageUploader 
+                  currentCoverImage={currentNote.coverImage}
+                  onImageUpload={handleCoverImageUpload}
+                  onImageRemove={handleCoverImageRemove}
                 />
               </div>
 
@@ -495,7 +517,7 @@ const NotesPage = ({ isAuthenticated }) => {
                     </option>
                   ))}
                 </select>
-              </div>              <div className="form-group">
+              </div><div className="form-group">
                 <TextFormatToolbar
                   onFormat={handleFormatText}
                   previewMode={previewMode}
