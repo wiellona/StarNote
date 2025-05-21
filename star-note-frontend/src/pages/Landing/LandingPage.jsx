@@ -96,8 +96,8 @@ const LandingPage = () => {
             <div className="testimonial-card">
               <div className="testimonial-stars">★★★★★</div>
               <p className="testimonial-text">
-                "StarNote has completely changed how I study. The flashcard
-                feature is perfect for my math exams!"
+                "I use the Pomodoro timer daily. It's helped me stay focused and
+                get more done in less time."
               </p>
               <div className="testimonial-author">
                 <div className="testimonial-avatar">
@@ -105,7 +105,7 @@ const LandingPage = () => {
                 </div>
                 <div className="testimonial-info">
                   <h4>Wiellona Darlene</h4>
-                  <p>Computer Engineering Student</p>
+                  <p>Software Developer</p>
                 </div>
               </div>
             </div>
@@ -113,8 +113,8 @@ const LandingPage = () => {
             <div className="testimonial-card">
               <div className="testimonial-stars">★★★★★</div>
               <p className="testimonial-text">
-                "I use the Pomodoro timer daily. It's helped me stay focused and
-                get more done in less time."
+                "StarNote has completely changed how I study. The flashcard
+                feature is perfect for my exams!"
               </p>
               <div className="testimonial-author">
                 <div className="testimonial-avatar">
@@ -122,7 +122,7 @@ const LandingPage = () => {
                 </div>
                 <div className="testimonial-info">
                   <h4>Laura Fawzia</h4>
-                  <p>Software Developer</p>
+                  <p>Computer Engineering Student</p>
                 </div>
               </div>
             </div>

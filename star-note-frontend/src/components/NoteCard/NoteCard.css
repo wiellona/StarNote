@@ -10,6 +10,7 @@
   height: 100%;
   transition: all var(--transition-fast);
   border: 1px solid var(--border);
+  overflow: hidden;
 }
 
 .note-card:hover {
@@ -43,6 +44,27 @@
   overflow: hidden;
   margin-bottom: var(--spacing-md);
   line-height: 1.4;
+}
+
+/* Styles for formatted content */
+.formatted-content strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.formatted-content em {
+  font-style: italic;
+}
+
+.formatted-content ul,
+.formatted-content ol {
+  padding-left: var(--spacing-md);
+  margin: var(--spacing-xs) 0;
+}
+
+.formatted-content ul li,
+.formatted-content ol li {
+  margin-bottom: 2px;
 }
 
 .note-footer {
@@ -83,6 +105,10 @@
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+.dark-theme .note-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .favorite-btn.active {
   color: #ffc107;
 }
@@ -120,6 +146,41 @@
 
 .dropdown-actions button:hover {
   background-color: var(--primary);
+}
+
+.dark-theme .dropdown-actions button:hover {
+  background-color: var(--secondary-dark);
+  color: var(--text-primary-dark);
+}
+
+/* Add these styles at the end of the file */
+.note-cover-image {
+  margin: calc(var(--spacing-md) * -1);
+  margin-bottom: var(--spacing-md);
+  height: 140px;
+  overflow: hidden;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+  position: relative;
+}
+
+.note-cover-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-fast);
+}
+
+.note-card:hover .note-cover-image img {
+  transform: scale(1.05);
+}
+
+/* Adjust category positioning when there's a cover image */
+.note-card .note-cover-image + .note-category {
+  position: absolute;
+  top: 140px;
+  left: var(--spacing-md);
+  transform: translateY(-50%);
 }
 
 @media (max-width: 768px) {

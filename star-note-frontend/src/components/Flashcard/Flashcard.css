@@ -1,15 +1,20 @@
 .flashcard {
-  perspective: 1000px;
+  perspective: 1500px;
   height: 200px;
   cursor: pointer;
   user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.flashcard:hover {
+  transform: translateY(-5px);
 }
 
 .flashcard-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
   transform-style: preserve-3d;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-md);
@@ -32,11 +37,19 @@
   border-radius: var(--radius-md);
   background-color: var(--card-bg);
   border: 1px solid var(--border);
+  /* Ensure sharp rendering during animation */
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .flashcard-back {
   transform: rotateY(180deg);
   background-color: var(--primary);
+  color: var(--text-primary);
+}
+
+.dark-theme .flashcard-back {
+  color: var(--text-primary-dark);
 }
 
 .flashcard-content {
@@ -97,34 +110,18 @@
   transition: all var(--transition-fast);
 }
 
+.dark-theme .flashcard-actions button {
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--text-primary-dark);
+}
+
 .flashcard-actions button:hover {
   background: rgba(255, 255, 255, 0.4);
-  transform: scale(1.1);
 }
 
-/* Animation for card flip */
-@keyframes flipIn {
-  from {
-    transform: rotateY(-180deg);
-  }
-  to {
-    transform: rotateY(0);
-  }
+.dark-theme .flashcard-actions button:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
-@keyframes flipOut {
-  from {
-    transform: rotateY(0);
-  }
-  to {
-    transform: rotateY(180deg);
-  }
-}
-
-.flashcard-front {
-  animation: flipIn 0.6s ease-out;
-}
-
-.flashcard.flipped .flashcard-front {
-  animation: flipOut 0.6s ease-in;
-}
+/* Remove separate animations and rely on transition for smoother effect */
+/* The card flip will be handled entirely by the transition on .flashcard-inner */
