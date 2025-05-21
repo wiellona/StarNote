@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Light Theme Colors */
+  --primary-light: #bbdefb;
+  --secondary-light: #fff8e1;
+  --accent-light: #1a237e;
+  --text-primary-light: #333;
+  --text-secondary-light: #555;
+  --background-light: #ffffff;
+  --card-bg-light: #fff;
+  --border-light: #e0e0e0;
+
+  /* Dark Theme Colors */
+  --primary-dark: #0d47a1;
+  --secondary-dark: #212121;
+  --accent-dark: #90caf9;
+  --text-primary-dark: #f5f5f5;
+  --text-secondary-dark: #bbbbbb;
+  --background-dark: #121212;
+  --card-bg-dark: #1e1e1e;
+  --border-dark: #333;
+
+  /* Current Theme Colors (default to light) */
+  --primary: var(--primary-light);
+  --secondary: var(--secondary-light);
+  --accent: var(--accent-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --background: var(--background-light);
+  --card-bg: var(--card-bg-light);
+  --border: var(--border-light);
+
+  /* Spacing System */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+.dark-theme {
+  --primary: var(--primary-dark);
+  --secondary: var(--secondary-dark);
+  --accent: var(--accent-dark);
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --background: var(--background-dark);
+  --card-bg: var(--card-bg-dark);
+  --border: var(--border-dark);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--background);
+  transition: background-color var(--transition-normal),
+    color var(--transition-normal);
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--primary);
+  color: var(--accent);
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+input,
+textarea {
+  font-family: "Poppins", sans-serif;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.star-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.1;
+  background-image: radial-gradient(circle, var(--primary) 1px, transparent 1px),
+    radial-gradient(circle, var(--primary) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* Layout */
+.page {
+  min-height: calc(100vh - 140px); /* Account for header and footer */
+  padding: var(--spacing-lg) 0;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .page {
+    padding: var(--spacing-md) 0;
+  }
+}
