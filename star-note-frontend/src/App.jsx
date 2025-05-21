@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { UserProvider } from "./contexts/UserContext";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import LandingPage from "./pages/Landing/LandingPage";
@@ -30,12 +31,12 @@ function App() {
     localStorage.removeItem("starnote-user");
     setIsAuthenticated(false);
   };
-
   return (
     <ThemeProvider>
-      <div className="app">
-        <div className="star-bg"></div>
-        <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <UserProvider>
+        <div className="app">
+          <div className="star-bg"></div>
+          <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route
@@ -63,9 +64,9 @@ function App() {
             path="/flashcards"
             element={<FlashcardsPage isAuthenticated={isAuthenticated} />}
           />
-        </Routes>
-        <Footer />
+        </Routes>        <Footer />
       </div>
+      </UserProvider>
     </ThemeProvider>
   );
 }

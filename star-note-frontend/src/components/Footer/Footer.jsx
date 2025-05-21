@@ -3,10 +3,9 @@ import "./Footer.css";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
   return (
     <footer className="footer">
-      <div className="container footer-content">
+      <div className="footer-content">
         <div className="footer-left">
           <div className="footer-logo">
             <span className="footer-logo-icon">✦</span>
@@ -19,7 +18,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <div className="container footer-bottom-content">
+        <div className="footer-bottom-content">
           <p className="copyright">
             © {currentYear} StarNote. K2 Group 6 Sistem Basis Data.
           </p>

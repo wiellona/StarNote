@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiTrash, FiStar, FiEdit, FiMoreVertical } from "react-icons/fi";
+import { formatText, stripFormatting } from "../../utils/formatText";
 import "./NoteCard.css";
 
 const NoteCard = ({ note, onDelete, onToggleFavorite, onEdit }) => {
@@ -27,13 +28,14 @@ const NoteCard = ({ note, onDelete, onToggleFavorite, onEdit }) => {
     setShowActions(false);
     onToggleFavorite(note.id);
   };
-
   // Function to limit text length
   const truncateText = (text, maxLength) => {
     if (!text) return "";
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
+    // First strip formatting for accurate length calculation
+    const plainText = stripFormatting(text);
+    return plainText.length > maxLength
+      ? plainText.substring(0, maxLength) + "..."
+      : plainText;
   };
 
   return (
@@ -42,7 +44,12 @@ const NoteCard = ({ note, onDelete, onToggleFavorite, onEdit }) => {
 
       <h3 className="note-title">{truncateText(note.title, 50)}</h3>
 
-      <div className="note-content">{truncateText(note.content, 150)}</div>
+      <div 
+        className="note-content formatted-content"
+        dangerouslySetInnerHTML={{ 
+          __html: formatText(truncateText(note.content, 150)) 
+        }}
+      ></div>
 
       <div className="note-footer">
         <div className="note-date">

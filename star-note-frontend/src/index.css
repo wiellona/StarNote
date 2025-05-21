@@ -12,14 +12,14 @@
   --border-light: #e0e0e0;
 
   /* Dark Theme Colors */
-  --primary-dark: #0d47a1;
-  --secondary-dark: #212121;
-  --accent-dark: #90caf9;
-  --text-primary-dark: #f5f5f5;
-  --text-secondary-dark: #bbbbbb;
-  --background-dark: #121212;
-  --card-bg-dark: #1e1e1e;
-  --border-dark: #333;
+  --primary-dark: #1e3a8a;
+  --secondary-dark: #1f2937;
+  --accent-dark: #60a5fa;
+  --text-primary-dark: #f3f4f6;
+  --text-secondary-dark: #d1d5db;
+  --background-dark: #111827;
+  --card-bg-dark: #1f2937;
+  --border-dark: #374151;
 
   /* Current Theme Colors (default to light) */
   --primary: var(--primary-light);
@@ -102,6 +102,11 @@ button {
   color: white;
 }
 
+.dark-theme .btn-primary {
+  background-color: var(--accent-dark);
+  color: var(--text-primary-dark);
+}
+
 .btn-primary:hover {
   opacity: 0.9;
 }
@@ -109,6 +114,11 @@ button {
 .btn-secondary {
   background-color: var(--primary);
   color: var(--accent);
+}
+
+.dark-theme .btn-secondary {
+  background-color: var(--primary-dark);
+  color: var(--text-primary-dark);
 }
 
 .btn-secondary:hover {
@@ -168,6 +178,11 @@ textarea:focus {
     radial-gradient(circle, var(--primary) 1px, transparent 1px);
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
+  transition: background-image var(--transition-normal);
+}
+
+.dark-theme .star-bg {
+  opacity: 0.15;
 }
 
 /* Layout */

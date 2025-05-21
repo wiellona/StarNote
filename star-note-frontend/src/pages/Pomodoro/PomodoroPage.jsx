@@ -11,12 +11,30 @@ import {
 } from "react-icons/fi";
 import "./PomodoroPage.css";
 
+// Constants for timer modes
+const TIMER_MODES = {
+  FOCUS: "focus",
+  SHORT_BREAK: "shortBreak",
+  LONG_BREAK: "longBreak",
+};
+
+// Default tasks for new users
+const DEFAULT_TASKS = [
+  { id: 1, text: "Complete project proposal", completed: false },
+  { id: 2, text: "Research new technologies", completed: false },
+  { id: 3, text: "Update portfolio website", completed: false },
+];
+
 const PomodoroPage = ({ isAuthenticated }) => {
   const navigate = useNavigate();
-  const [mode, setMode] = useState("focus"); // 'focus', 'shortBreak', 'longBreak'
-  const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 minutes in seconds
+  
+  // Timer state
+  const [mode, setMode] = useState(TIMER_MODES.FOCUS);
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [rounds, setRounds] = useState(0);
+  
+  // Settings state
   const [showSettings, setShowSettings] = useState(false);
   const [settings, setSettings] = useState({
     focusTime: 25,
@@ -24,44 +42,28 @@ const PomodoroPage = ({ isAuthenticated }) => {
     longBreakTime: 15,
     roundsBeforeLongBreak: 4,
   });
-  const [tasks, setTasks] = useState([
-    { id: 1, text: "Complete project proposal", completed: false },
-    { id: 2, text: "Research new technologies", completed: false },
-    { id: 3, text: "Update portfolio website", completed: false },
-  ]);
+  
+  // Task management
+  const [tasks, setTasks] = useState(DEFAULT_TASKS);
   const [newTask, setNewTask] = useState("");
 
-  // Refs for audio sounds
+  // Audio refs
   const tickSound = useRef(null);
   const alarmSound = useRef(null);
 
-  // Redirect if not authenticated
+  // Authentication check
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/auth");
     }
   }, [isAuthenticated, navigate]);
 
-  // Set initial time based on mode
+  // Update timer when mode changes
   useEffect(() => {
-    switch (mode) {
-      case "focus":
-        setTimeLeft(settings.focusTime * 60);
-        break;
-      case "shortBreak":
-        setTimeLeft(settings.shortBreakTime * 60);
-        break;
-      case "longBreak":
-        setTimeLeft(settings.longBreakTime * 60);
-        break;
-      default:
-        setTimeLeft(settings.focusTime * 60);
-    }
-    // Stop timer when mode changes
-    setIsActive(false);
+    resetTimer();
   }, [mode, settings]);
 
-  // Timer logic
+  // Timer countdown logic
   useEffect(() => {
     let interval;
 
@@ -69,66 +71,66 @@ const PomodoroPage = ({ isAuthenticated }) => {
       interval = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
 
-        // Play tick sound at specific intervals
+        // Play tick sound for last 10 seconds
         if (timeLeft <= 10 && tickSound.current) {
-          // Would play tick sound in production
-          // tickSound.current.play()
+          // In production: tickSound.current.play()
         }
       }, 1000);
     } else if (isActive && timeLeft === 0) {
-      // Timer finished
-      if (alarmSound.current) {
-        // Would play alarm sound in production
-        // alarmSound.current.play()
-      }
-
-      // Change mode based on current mode
-      if (mode === "focus") {
-        // Increment round counter
-        const newRounds = rounds + 1;
-        setRounds(newRounds);
-
-        // Check if it's time for a long break
-        if (newRounds % settings.roundsBeforeLongBreak === 0) {
-          setMode("longBreak");
-        } else {
-          setMode("shortBreak");
-        }
-      } else {
-        // After any break, go back to focus mode
-        setMode("focus");
-      }
-
-      // Stop the timer
-      setIsActive(false);
+      // Timer completed
+      handleTimerComplete();
     }
 
     return () => clearInterval(interval);
-  }, [isActive, timeLeft, mode, rounds, settings.roundsBeforeLongBreak]);
+  }, [isActive, timeLeft]);
+
+  // Handle timer completion
+  const handleTimerComplete = () => {
+    // Play alarm sound
+    if (alarmSound.current) {
+      // In production: alarmSound.current.play()
+    }
+
+    if (mode === TIMER_MODES.FOCUS) {
+      const newRounds = rounds + 1;
+      setRounds(newRounds);
+
+      // Determine break type
+      if (newRounds % settings.roundsBeforeLongBreak === 0) {
+        setMode(TIMER_MODES.LONG_BREAK);
+      } else {
+        setMode(TIMER_MODES.SHORT_BREAK);
+      }
+    } else {
+      // After any break, return to focus mode
+      setMode(TIMER_MODES.FOCUS);
+    }
+
+    setIsActive(false);
+  };
 
   // Format time as MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const toggleTimer = () => {
-    setIsActive(!isActive);
-  };
+  // Timer controls
+  const toggleTimer = () => setIsActive(!isActive);
 
   const resetTimer = () => {
     setIsActive(false);
+    
+    // Set time based on current mode
     switch (mode) {
-      case "focus":
+      case TIMER_MODES.FOCUS:
         setTimeLeft(settings.focusTime * 60);
         break;
-      case "shortBreak":
+      case TIMER_MODES.SHORT_BREAK:
         setTimeLeft(settings.shortBreakTime * 60);
         break;
-      case "longBreak":
+      case TIMER_MODES.LONG_BREAK:
         setTimeLeft(settings.longBreakTime * 60);
         break;
       default:
@@ -137,25 +139,26 @@ const PomodoroPage = ({ isAuthenticated }) => {
   };
 
   const skipToNext = () => {
-    if (mode === "focus") {
+    if (mode === TIMER_MODES.FOCUS) {
       const newRounds = rounds + 1;
       setRounds(newRounds);
 
       if (newRounds % settings.roundsBeforeLongBreak === 0) {
-        setMode("longBreak");
+        setMode(TIMER_MODES.LONG_BREAK);
       } else {
-        setMode("shortBreak");
+        setMode(TIMER_MODES.SHORT_BREAK);
       }
     } else {
-      setMode("focus");
+      setMode(TIMER_MODES.FOCUS);
     }
   };
 
+  // Settings management
   const handleSettingChange = (e) => {
     const { name, value } = e.target;
     setSettings({
       ...settings,
-      [name]: parseInt(value, 10),
+      [name]: parseInt(value, 10) || 1, // Default to 1 if invalid
     });
   };
 
@@ -164,13 +167,14 @@ const PomodoroPage = ({ isAuthenticated }) => {
     resetTimer();
   };
 
+  // Task management
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
 
     const task = {
       id: Date.now(),
-      text: newTask,
+      text: newTask.trim(),
       completed: false,
     };
 
@@ -190,17 +194,17 @@ const PomodoroPage = ({ isAuthenticated }) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  // Calculate progress percentage
+  // Calculate progress percentage for circular timer
   const calculateProgress = () => {
     let totalTime;
     switch (mode) {
-      case "focus":
+      case TIMER_MODES.FOCUS:
         totalTime = settings.focusTime * 60;
         break;
-      case "shortBreak":
+      case TIMER_MODES.SHORT_BREAK:
         totalTime = settings.shortBreakTime * 60;
         break;
-      case "longBreak":
+      case TIMER_MODES.LONG_BREAK:
         totalTime = settings.longBreakTime * 60;
         break;
       default:
@@ -210,34 +214,51 @@ const PomodoroPage = ({ isAuthenticated }) => {
     return ((totalTime - timeLeft) / totalTime) * 100;
   };
 
+  // Get color based on current mode
+  const getModeColor = () => {
+    switch (mode) {
+      case TIMER_MODES.FOCUS:
+        return "var(--accent)";
+      case TIMER_MODES.SHORT_BREAK:
+        return "#4CAF50";
+      case TIMER_MODES.LONG_BREAK:
+        return "#FF9800";
+      default:
+        return "var(--accent)";
+    }
+  };
+
   return (
     <div className="pomodoro-page page">
       <div className="container">
         <h1 className="pomodoro-title">Pomodoro Timer</h1>
 
         <div className="pomodoro-container">
+          {/* Timer Section */}
           <div className="timer-section">
+            {/* Mode Selection */}
             <div className="timer-modes">
               <button
-                className={`mode-btn ${mode === "focus" ? "active" : ""}`}
-                onClick={() => setMode("focus")}
+                className={`mode-btn ${mode === TIMER_MODES.FOCUS ? "active" : ""}`}
+                onClick={() => setMode(TIMER_MODES.FOCUS)}
               >
                 Focus
               </button>
               <button
-                className={`mode-btn ${mode === "shortBreak" ? "active" : ""}`}
-                onClick={() => setMode("shortBreak")}
+                className={`mode-btn ${mode === TIMER_MODES.SHORT_BREAK ? "active" : ""}`}
+                onClick={() => setMode(TIMER_MODES.SHORT_BREAK)}
               >
                 Short Break
               </button>
               <button
-                className={`mode-btn ${mode === "longBreak" ? "active" : ""}`}
-                onClick={() => setMode("longBreak")}
+                className={`mode-btn ${mode === TIMER_MODES.LONG_BREAK ? "active" : ""}`}
+                onClick={() => setMode(TIMER_MODES.LONG_BREAK)}
               >
                 Long Break
               </button>
             </div>
 
+            {/* Timer Display */}
             <div className="timer-display">
               <div className="progress-ring-container">
                 <div className="time-remaining">{formatTime(timeLeft)}</div>
@@ -253,13 +274,7 @@ const PomodoroPage = ({ isAuthenticated }) => {
                   />
                   <circle
                     className="progress-ring-circle"
-                    stroke={
-                      mode === "focus"
-                        ? "var(--accent)"
-                        : mode === "shortBreak"
-                        ? "#4CAF50"
-                        : "#FF9800"
-                    }
+                    stroke={getModeColor()}
                     strokeWidth="8"
                     fill="transparent"
                     r="120"
@@ -275,11 +290,13 @@ const PomodoroPage = ({ isAuthenticated }) => {
               </div>
             </div>
 
+            {/* Timer Controls */}
             <div className="timer-controls">
               <button
                 className="control-btn reset-btn"
                 onClick={resetTimer}
                 aria-label="Reset timer"
+                title="Reset timer"
               >
                 <FiClock />
               </button>
@@ -288,6 +305,7 @@ const PomodoroPage = ({ isAuthenticated }) => {
                 className="control-btn play-btn"
                 onClick={toggleTimer}
                 aria-label={isActive ? "Pause timer" : "Start timer"}
+                title={isActive ? "Pause timer" : "Start timer"}
               >
                 {isActive ? <FiPause /> : <FiPlay />}
               </button>
@@ -296,6 +314,7 @@ const PomodoroPage = ({ isAuthenticated }) => {
                 className="control-btn skip-btn"
                 onClick={skipToNext}
                 aria-label="Skip to next"
+                title="Skip to next"
               >
                 <FiSkipForward />
               </button>
@@ -304,22 +323,23 @@ const PomodoroPage = ({ isAuthenticated }) => {
                 className="control-btn settings-btn"
                 onClick={() => setShowSettings(true)}
                 aria-label="Settings"
+                title="Settings"
               >
                 <FiSettings />
               </button>
             </div>
 
+            {/* Round Counter */}
             <div className="rounds-counter">
               <span>
-                Round{" "}
-                {rounds % settings.roundsBeforeLongBreak ||
-                  settings.roundsBeforeLongBreak}{" "}
+                Round {rounds % settings.roundsBeforeLongBreak || settings.roundsBeforeLongBreak}{" "}
                 of {settings.roundsBeforeLongBreak}
               </span>
               <span className="total-rounds">Total: {rounds}</span>
             </div>
           </div>
 
+          {/* Tasks Section */}
           <div className="tasks-section">
             <h3>Focus Tasks</h3>
 
@@ -329,6 +349,7 @@ const PomodoroPage = ({ isAuthenticated }) => {
                 placeholder="Add a new task..."
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
+                maxLength={100}
               />
               <button type="submit">Add</button>
             </form>
@@ -343,21 +364,17 @@ const PomodoroPage = ({ isAuthenticated }) => {
                     <button
                       className="complete-btn"
                       onClick={() => toggleTaskCompletion(task.id)}
-                      aria-label={
-                        task.completed
-                          ? "Mark as incomplete"
-                          : "Mark as complete"
-                      }
+                      aria-label={task.completed ? "Mark as incomplete" : "Mark as complete"}
+                      title={task.completed ? "Mark as incomplete" : "Mark as complete"}
                     >
-                      {task.completed ? (
-                        <FiCheck className="check-icon" />
-                      ) : null}
+                      {task.completed && <FiCheck className="check-icon" />}
                     </button>
                     <span className="task-text">{task.text}</span>
                     <button
                       className="delete-btn"
                       onClick={() => deleteTask(task.id)}
                       aria-label="Delete task"
+                      title="Delete task"
                     >
                       <FiX />
                     </button>
@@ -370,6 +387,7 @@ const PomodoroPage = ({ isAuthenticated }) => {
           </div>
         </div>
 
+        {/* Settings Modal */}
         {showSettings && (
           <div className="settings-modal">
             <div className="settings-content">
