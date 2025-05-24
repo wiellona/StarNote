@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  backend:
+    build: ./star-note-backend
+    container_name: starnote-backend
+    restart: unless-stopped
+    ports:
+      - "5001:5000"
+    environment:
+      - MONGO_URI=mongodb+srv://k2group6:4lfVCblY5sTmdFbu@cluster0.nagmn0c.mongodb.net/note-app
+      - PORT=5000
+      - JWT_SECRET=j8K#p2Lm*7Zq!9Xs@5Rv$4Yt^6Wn&3Ub
+      - CLOUDINARY_URL=cloudinary://698282118967281:x_M_uuM1W7Hp1j09T4BN32rwbXE@drno8mzax
+      - CLOUDINARY_CLOUD_NAME=drno8mzax
+      - CLOUDINARY_API_KEY=698282118967281
+      - CLOUDINARY_API_SECRET=x_M_uuM1W7Hp1j09T4BN32rwbXE
+    networks:
+      - starnote-network
+
+  frontend:
+    build: ./star-note-frontend
+    container_name: starnote-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - starnote-network
+
+networks:
+  starnote-network:
+    driver: bridge
