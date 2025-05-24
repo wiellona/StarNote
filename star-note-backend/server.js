@@ -38,17 +38,35 @@ app.get("/api/health", (req, res) => {
 
 // Test endpoint to verify our changes
 app.get("/api/test", (req, res) => {
-  res.status(200).json({ message: "Test endpoint working", env: process.env.JWT_SECRET ? "JWT_SECRET is set" : "JWT_SECRET is missing" });
+  res
+    .status(200)
+    .json({
+      message: "Test endpoint working",
+      env: process.env.JWT_SECRET
+        ? "JWT_SECRET is set"
+        : "JWT_SECRET is missing",
+    });
 });
 
 // Connect to MongoDB
+console.log("Attempting to connect to MongoDB...");
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    connectTimeoutMS: 60000, // Increase timeout to 60 seconds
+    socketTimeoutMS: 60000, // Socket timeout
+    serverSelectionTimeoutMS: 60000, // Server selection timeout
+    heartbeatFrequencyMS: 30000, // Check server status every 30 seconds
   })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => {
+    console.error("MongoDB connection error details:", {
+      message: err.message,
+      code: err.code,
+      stack: err.stack,
+    });
+  });
 
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to DB");

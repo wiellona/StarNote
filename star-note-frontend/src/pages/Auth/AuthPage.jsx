@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { authService } from "../../utils/authService";
-import { toast } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./AuthPage.css";
 
 const AuthPage = ({ onLogin, isAuthenticated }) => {
@@ -14,6 +14,7 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -26,6 +27,7 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
     setErrors({});
+    setApiError("");
   };
 
   const togglePasswordVisibility = () => {
@@ -44,6 +46,9 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
         ...errors,
         [name]: "",
       });
+    }
+    if (apiError) {
+      setApiError("");
     }
   };
 
@@ -72,42 +77,50 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      try {
-        let userData;
+    if (!validateForm()) {
+      return;
+    }
+    try {
+      const url = isSignUp
+        ? "http://localhost:5000/api/users/register"
+        : "http://localhost:5000/api/users/login";
 
-        if (isSignUp) {
-          // Register new user
-          userData = await authService.register({
+      const payload = isSignUp
+        ? {
             username: formData.name,
             email: formData.email,
             password: formData.password,
-          });
-          toast.success("Account created successfully");
-
-          // After registration, automatically log in
-          await authService.login({
+          }
+        : {
             email: formData.email,
             password: formData.password,
-          });
-        } else {
-          // Login existing user
-          userData = await authService.login({
-            email: formData.email,
-            password: formData.password,
-          });
-          toast.success("Login successful");
-        }
+          };
 
-        onLogin(userData.user);
-        navigate("/dashboard");
-      } catch (error) {
-        console.error("Authentication error:", error);
-        const errorMessage =
-          error.response?.data?.message ||
-          (isSignUp ? "Registration failed" : "Login failed");
-        toast.error(errorMessage);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setApiError(data.message || "An error occurred");
+        toast.error(data.message || "An error occurred");
+        return;
       }
+
+      // On success, call onLogin with user data and navigate to dashboard
+      onLogin(data.user);
+      toast.success(
+        isSignUp ? "Registration successful!" : "Login successful!"
+      );
+      navigate("/dashboard");
+    } catch (error) {
+      setApiError("Failed to connect to server");
+      toast.error("Failed to connect to server");
     }
   };
 
@@ -191,6 +204,10 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
               )}
             </div>
 
+            {apiError && (
+              <div className="error-message api-error">{apiError}</div>
+            )}
+
             {!isSignUp && (
               <div className="form-action forgot-password">
                 <a href="#reset">Forgot password?</a>
@@ -220,6 +237,7 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
