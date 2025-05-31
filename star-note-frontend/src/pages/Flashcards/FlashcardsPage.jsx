@@ -8,6 +8,8 @@ import {
   FiSave,
   FiPlay,
   FiPause,
+  FiTrash,
+  FiEdit,
 } from "react-icons/fi";
 import Flashcard from "../../components/Flashcard/Flashcard";
 import { flashcardService } from "../../utils/api";

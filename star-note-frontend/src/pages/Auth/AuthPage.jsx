@@ -105,11 +105,16 @@ const AuthPage = ({ onLogin, isAuthenticated }) => {
       });
 
       const data = await response.json();
-
       if (!response.ok) {
         setApiError(data.message || "An error occurred");
         toast.error(data.message || "An error occurred");
         return;
+      }
+
+      // Store the token in localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("starnote-user", JSON.stringify(data.user));
       }
 
       // On success, call onLogin with user data and navigate to dashboard

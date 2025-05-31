@@ -14,7 +14,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-md);
@@ -88,16 +88,14 @@
   right: var(--spacing-xs);
   display: flex;
   gap: var(--spacing-xs);
-  opacity: 0;
-  transition: opacity var(--transition-fast);
+  opacity: 1; /* Always visible */
+  z-index: 5;
+  pointer-events: auto; /* Ensure buttons are clickable */
 }
 
-.flashcard:hover .flashcard-actions {
-  opacity: 1;
-}
-
-.flashcard-actions button {
-  background: rgba(255, 255, 255, 0.2);
+.flashcard-actions button.edit-btn,
+.flashcard-actions button.delete-btn {
+  background: transparent; /* No background by default */
   border: none;
   width: 30px;
   height: 30px;
@@ -105,22 +103,55 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-primary);
-  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7); /* Darker icon color for better visibility */
+  font-size: 1rem;
+  cursor: pointer;
   transition: all var(--transition-fast);
+  padding: 0;
+  opacity: 1;
 }
 
 .dark-theme .flashcard-actions button {
-  background: rgba(255, 255, 255, 0.3);
-  color: var(--text-primary-dark);
+  color: rgba(255, 255, 255, 0.85); /* Brighter icon color for dark theme */
 }
 
-.flashcard-actions button:hover {
+/* Force visibility of individual buttons */
+.flashcard-actions button.edit-btn,
+.flashcard-actions button.delete-btn {
+  visibility: visible !important;
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+/* Show background only on hover */
+.flashcard-actions button.edit-btn:hover,
+.flashcard-actions button.delete-btn:hover {
   background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1); /* Subtle scale effect on hover */
 }
 
-.dark-theme .flashcard-actions button:hover {
+.dark-theme .flashcard-actions button.edit-btn:hover,
+.dark-theme .flashcard-actions button.delete-btn:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+/* Explicit styles for icons in buttons */
+.flashcard-actions button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: auto;
+  stroke-width: 2.5px; /* Thicker lines for better visibility */
+  filter: drop-shadow(
+    0px 0px 1px rgba(0, 0, 0, 0.3)
+  ); /* Subtle shadow for better contrast */
+}
+
+/* Ensure both icons are visible */
+.flashcard-actions button.edit-btn svg,
+.flashcard-actions button.delete-btn svg {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Remove separate animations and rely on transition for smoother effect */

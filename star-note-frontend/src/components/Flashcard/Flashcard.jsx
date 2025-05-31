@@ -17,7 +17,6 @@ const Flashcard = ({ flashcard, onDelete, onEdit }) => {
     e.stopPropagation();
     onEdit(flashcard);
   };
-
   return (
     <div
       className={`flashcard ${flipped ? "flipped" : ""}`}
@@ -26,30 +25,29 @@ const Flashcard = ({ flashcard, onDelete, onEdit }) => {
       <div className="flashcard-inner">
         <div className="flashcard-front">
           <div className="flashcard-content">{flashcard.question}</div>
-
           <div className="flashcard-actions">
             <button
               className="edit-btn"
               onClick={handleEdit}
               aria-label="Edit flashcard"
+              type="button"
             >
-              <FiEdit />
+              <FiEdit size={16} />
             </button>
             <button
               className="delete-btn"
               onClick={handleDelete}
               aria-label="Delete flashcard"
+              type="button"
             >
-              <FiTrash />
+              <FiTrash size={16} />
             </button>
-          </div>
-
+          </div>{" "}
           <div className="flashcard-footer">
             <div className="flashcard-category">{flashcard.category}</div>
             <div className="flashcard-indicator">Click to flip</div>
           </div>
         </div>
-
         <div className="flashcard-back">
           <div className="flashcard-content">{flashcard.answer}</div>
 
@@ -58,15 +56,17 @@ const Flashcard = ({ flashcard, onDelete, onEdit }) => {
               className="edit-btn"
               onClick={handleEdit}
               aria-label="Edit flashcard"
+              type="button"
             >
-              <FiEdit />
+              <FiEdit size={16} />
             </button>
             <button
               className="delete-btn"
               onClick={handleDelete}
               aria-label="Delete flashcard"
+              type="button"
             >
-              <FiTrash />
+              <FiTrash size={16} />
             </button>
           </div>
 
