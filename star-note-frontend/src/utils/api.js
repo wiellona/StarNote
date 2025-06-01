@@ -199,7 +199,9 @@ export const noteService = {
 
   // Get note statistics for dashboard
   getNoteStats: async () => {
-    const response = await api.get("/notes/stats");
+    const response = await api.get("/notes/stats", {
+      params: { user_id: localStorage.getItem("userId") },
+    });
     return response.data;
   },
 };

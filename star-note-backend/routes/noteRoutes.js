@@ -262,4 +262,30 @@ router.delete("/trash/empty", async (req, res) => {
   }
 });
 
+// Get note statistics for the user dashboard
+router.get("/stats", async (req, res) => {
+  try {
+    const userId = req.query.user_id;
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+    const totalCount = await Note.countDocuments({
+      user_id: userId,
+      status: { $ne: "trash" },
+    });
+    const recentNotes = await Note.find({
+      user_id: userId,
+      status: { $ne: "trash" },
+    })
+      .sort({ updatedAt: -1 })
+      .limit(3);
+    res.json({
+      totalCount,
+      recentNotes,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

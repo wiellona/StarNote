@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FiFileText, FiClock, FiLayers, FiPlus } from "react-icons/fi";
 import NoteCard from "../../components/NoteCard/NoteCard";
 import "./DashboardPage.css";
+import { noteService, flashcardService } from "../../utils/api";
+import { toast } from "react-hot-toast";
 
 const DashboardPage = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const [recentNotes, setRecentNotes] = useState([]);
   const [totalNotes, setTotalNotes] = useState(0);
   const [totalFlashcards, setTotalFlashcards] = useState(0);
-  const [pomodoroSessions, setPomodoroSessions] = useState(0);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -18,43 +19,35 @@ const DashboardPage = ({ isAuthenticated }) => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Mock data fetch - in a real app, this would come from an API
+  // Fetch note and flashcard stats from backend for dashboard
   useEffect(() => {
-    // Mock data
-    const mockNotes = [
-      {
-        id: "1",
-        title: "Meeting Notes: Project Kickoff",
-        content:
-          "Discussed project timeline, assigned tasks to team members, and set up weekly check-ins.",
-        category: "Work",
-        isFavorite: true,
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        title: "React Hooks Cheatsheet",
-        content:
-          "useState, useEffect, useContext, useReducer, useMemo, useCallback, useRef",
-        category: "Programming",
-        isFavorite: false,
-        updatedAt: new Date(Date.now() - 86400000).toISOString(),
-      },
-      {
-        id: "3",
-        title: "Books to Read",
-        content: "1. Atomic Habits\n2. Deep Work\n3. The Psychology of Money",
-        category: "Personal",
-        isFavorite: false,
-        updatedAt: new Date(Date.now() - 172800000).toISOString(),
-      },
-    ];
-
-    setRecentNotes(mockNotes);
-    setTotalNotes(12);
-    setTotalFlashcards(34);
-    setPomodoroSessions(27);
-  }, []);
+    const fetchDashboardData = async () => {
+      try {
+        // Fetch all notes for the user (like NotesPage)
+        const allNotes = await noteService.getAllNotes();
+        setTotalNotes(allNotes.length);
+        setRecentNotes(
+          allNotes.slice(0, 3).map((note) => ({
+            id: note._id,
+            title: note.title,
+            content: note.content,
+            category: note.category,
+            isFavorite: note.status === "favorite",
+            updatedAt: note.updatedAt,
+          }))
+        );
+        // Fetch all flashcards for the user (like FlashcardsPage)
+        const allFlashcards = await flashcardService.getAllFlashcards();
+        setTotalFlashcards(allFlashcards.length);
+      } catch (error) {
+        setTotalNotes(0);
+        setRecentNotes([]);
+        setTotalFlashcards(0);
+        console.error("Dashboard fetch error:", error);
+      }
+    };
+    if (isAuthenticated) fetchDashboardData();
+  }, [isAuthenticated]);
 
   const handleCreateNote = () => {
     navigate("/notes");
@@ -63,9 +56,52 @@ const DashboardPage = ({ isAuthenticated }) => {
   const handleCreateFlashcard = () => {
     navigate("/flashcards");
   };
-
   const handleStartPomodoro = () => {
     navigate("/pomodoro");
+  };
+
+  const handleEditNote = async (note) => {
+    // Navigate to Notes page and pass the note data for editing
+    navigate("/notes", { state: { editNote: note } });
+  };
+
+  const handleDeleteNote = async (id) => {
+    try {
+      // Move to trash (soft delete) - dashboard only shows active notes
+      await noteService.moveToTrash(id);
+      toast.success("Note moved to trash");
+
+      // Remove note from local state
+      setRecentNotes(recentNotes.filter((note) => note.id !== id));
+      setTotalNotes(totalNotes - 1);
+    } catch (error) {
+      console.error("Error deleting note:", error);
+      toast.error("Failed to delete note");
+    }
+  };
+
+  const handleToggleFavorite = async (id) => {
+    try {
+      const note = recentNotes.find((note) => note.id === id);
+      if (!note) return;
+
+      const newFavoriteStatus = !note.isFavorite;
+      await noteService.toggleFavorite(id, newFavoriteStatus);
+
+      // Update local state
+      setRecentNotes(
+        recentNotes.map((note) =>
+          note.id === id ? { ...note, isFavorite: newFavoriteStatus } : note
+        )
+      );
+
+      toast.success(
+        newFavoriteStatus ? "Added to favorites" : "Removed from favorites"
+      );
+    } catch (error) {
+      console.error("Error toggling favorite status:", error);
+      toast.error("Failed to update favorite status");
+    }
   };
 
   return (
@@ -98,17 +134,6 @@ const DashboardPage = ({ isAuthenticated }) => {
               <p className="stat-label">Total Cards</p>
             </div>
           </div>
-
-          <div className="stat-card">
-            <div className="stat-icon pomodoro-icon">
-              <FiClock />
-            </div>
-            <div className="stat-content">
-              <h3>Pomodoro</h3>
-              <p className="stat-number">{pomodoroSessions}</p>
-              <p className="stat-label">Completed Sessions</p>
-            </div>
-          </div>
         </div>
 
         <div className="dashboard-actions">
@@ -134,16 +159,16 @@ const DashboardPage = ({ isAuthenticated }) => {
             <button className="view-all" onClick={() => navigate("/notes")}>
               View All
             </button>
-          </div>
-
+          </div>{" "}
           <div className="recent-notes">
             {recentNotes.map((note) => (
               <NoteCard
                 key={note.id}
                 note={note}
-                onDelete={() => {}}
-                onToggleFavorite={() => {}}
-                onEdit={() => navigate("/notes")}
+                onDelete={handleDeleteNote}
+                onToggleFavorite={handleToggleFavorite}
+                onEdit={handleEditNote}
+                inTrashView={false}
               />
             ))}
 
