@@ -1,158 +1,74 @@
-.format-toolbar {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border);
-    border-bottom: none;
-    border-top-left-radius: var(--radius-md);
-    border-top-right-radius: var(--radius-md);
-    margin-bottom: -1px;
-    /* Makes toolbar connect smoothly with textarea */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    flex-wrap: nowrap;
-    gap: 2px;
+.text-format-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.format-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin: 0 4px;
-    font-size: 1.25rem;
-    /* Increased icon size */
-    position: relative;
-    /* For positioning the text indicators */
+.toolbar-buttons {
+  display: flex;
+  gap: var(--spacing-xs);
 }
 
-.format-btn:hover {
-    background-color: var(--hover);
-    color: var(--accent);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.format-btn,
+.preview-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  font-size: 1rem;
 }
 
-.format-btn.active {
-    background-color: var(--accent-light);
-    color: var(--accent);
-    border-color: var(--accent);
-    font-weight: bold;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Enhance the active state for each button type */
-.format-btn.active .icon-bold,
-.format-btn.active .icon-text {
-    color: var(--accent);
-}
-
-.format-btn.active .numbered-indicator,
-.format-btn.active .bullet-indicator {
-    color: var(--accent);
-    font-weight: bold;
-}
-
-.toolbar-separator {
-    width: 2px;
-    height: 28px;
-    background-color: var(--border);
-    margin: 0 10px;
-    border-radius: 1px;
-}
-
-.toolbar-spacer {
-    flex-grow: 1;
+.format-btn:hover:not(.disabled),
+.preview-btn:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-primary);
+  border-color: var(--border);
 }
 
 .format-btn.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background-color: rgba(0, 0, 0, 0.05);
-    border-color: var(--border);
-    color: var(--text-secondary);
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.format-btn.preview-btn {
-    margin-left: auto;
-    background-color: rgba(0, 120, 215, 0.1);
-    /* Slight blue tint to highlight preview button */
+.preview-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--border);
+  background-color: var(--hover-bg);
 }
 
-.format-btn.preview-btn.active {
-    background-color: var(--accent-light);
-    color: var(--accent);
-    border-color: var(--accent);
+.image-upload {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-/* Text indicators for formatting buttons */
-.icon-text,
-.numbered-indicator,
-.bullet-indicator {
-    font-size: 0.85rem;
-    font-weight: bold;
-    margin-left: 2px;
-    position: relative;
-    top: 1px;
+.image-upload input[type="file"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.icon-bold+.icon-text {
-    font-weight: 700;
+.image-upload.disabled {
+  cursor: not-allowed;
 }
 
-.icon-italic+.icon-text {
-    font-style: italic;
-    font-weight: 700;
-}
-
-.numbered-indicator {
-    font-size: 0.75rem;
-    margin-left: 0;
-}
-
-.bullet-indicator {
-    font-size: 1.2rem;
-    line-height: 0.7;
-    margin-left: 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .format-toolbar {
-        padding: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .format-btn {
-        width: 44px;
-        /* Increased width for better tap targets */
-        height: 44px;
-        /* Increased height for better tap targets */
-        margin: 3px;
-        font-size: 1.1rem;
-    }
-
-    .toolbar-separator {
-        height: 24px;
-        margin: 0 6px;
-    }
-
-    /* Make indicators more visible on mobile */
-    .icon-text,
-    .numbered-indicator,
-    .bullet-indicator {
-        font-size: 0.9rem;
-    }
-
-    .bullet-indicator {
-        font-size: 1.3rem;
-    }
+.image-upload.disabled input[type="file"] {
+  cursor: not-allowed;
 }

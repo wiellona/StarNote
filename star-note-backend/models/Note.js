@@ -30,6 +30,11 @@ const noteSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  category: {
+    type: String,
+    default: "personal",
+    set: (value) => value.toLowerCase(),
+  },
 });
 
 // Middleware to update the updatedAt field on save

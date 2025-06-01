@@ -215,6 +215,38 @@
   font-size: 1.1rem;
 }
 
+/* Selection actions bar below filter tabs */
+.selection-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm) 0;
+}
+.selected-count {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.btn-permanent-delete {
+  background-color: #e53935 !important;
+  color: #fff !important;
+  border: none;
+  transition: background 0.2s;
+}
+.btn-permanent-delete:disabled {
+  background-color: #bdbdbd !important;
+  color: #fff !important;
+  cursor: not-allowed;
+}
+
+/* Add margin for the select notes button in trash section */
+.trash-actions {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .notes-header {
     flex-direction: column;

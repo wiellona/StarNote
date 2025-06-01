@@ -41,6 +41,7 @@ router.post("/", parser.single("cover_image"), async (req, res) => {
       content: req.body.content,
       user_id: req.body.user_id, // Get user ID from request body
       cover_image: coverImageUrl,
+      category: (req.body.category || "personal").toLowerCase(),
       status: req.body.status || "active",
     });
 
@@ -58,12 +59,13 @@ router.get("/", async (req, res) => {
     const userId = req.query.user_id;
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
-    }
-
-    // Add optional query parameters
-    const filter = { user_id: userId }; // Filter by status if provided
+    } // Build filter criteria
+    const filter = { user_id: userId };
     if (req.query.status) {
       filter.status = req.query.status;
+    } else {
+      // If no status specified, show all notes except trash
+      filter.status = { $ne: "trash" };
     }
 
     const notes = await Note.find(filter).sort({ updatedAt: -1 }); // Sort by most recently updated

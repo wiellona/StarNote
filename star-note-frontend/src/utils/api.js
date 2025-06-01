@@ -116,10 +116,90 @@ export const flashcardService = {
     });
     return response.data;
   },
-
   // Export all flashcards
   exportFlashcards: async () => {
     const response = await api.get("/flashcards/export");
+    return response.data;
+  },
+};
+
+// Note API services
+export const noteService = {
+  // Get all notes with optional filters
+  getAllNotes: async (status, search) => {
+    const params = {
+      user_id: localStorage.getItem("userId"), // Always include user_id
+    };
+    if (status) params.status = status;
+    if (search) params.search = search;
+
+    const response = await api.get("/notes", { params });
+    return response.data;
+  },
+  // Get a single note
+  getNote: async (id) => {
+    const response = await api.get(`/notes/${id}`, {
+      params: { user_id: localStorage.getItem("userId") },
+    });
+    return response.data;
+  },
+  // Create a new note
+  createNote: async (noteData) => {
+    // Include user_id in the note data
+    const noteWithUser = {
+      ...noteData,
+      user_id: localStorage.getItem("userId"),
+    };
+    const response = await api.post("/notes", noteWithUser);
+    return response.data;
+  },
+  // Update a note
+  updateNote: async (id, noteData) => {
+    // Include user_id in the note data
+    const noteWithUser = {
+      ...noteData,
+      user_id: localStorage.getItem("userId"),
+    };
+    const response = await api.put(`/notes/${id}`, noteWithUser);
+    return response.data;
+  },
+
+  // Delete a note
+  deleteNote: async (id) => {
+    const response = await api.delete(`/notes/${id}`, {
+      params: { user_id: localStorage.getItem("userId") },
+    });
+    return response.data;
+  }, // Toggle favorite status
+  toggleFavorite: async (id, isFavorite) => {
+    // Use the /favorite endpoint which will toggle the favorite status
+    const response = await api.put(`/notes/${id}/favorite`, {
+      user_id: localStorage.getItem("userId"),
+    });
+    return response.data;
+  },
+
+  // Move to trash
+  moveToTrash: async (id) => {
+    // Use the /trash endpoint to move to trash
+    const response = await api.put(`/notes/${id}/trash`, {
+      user_id: localStorage.getItem("userId"),
+    });
+    return response.data;
+  },
+
+  // Restore from trash
+  restoreFromTrash: async (id) => {
+    // Use the /restore endpoint to restore from trash
+    const response = await api.put(`/notes/${id}/restore`, {
+      user_id: localStorage.getItem("userId"),
+    });
+    return response.data;
+  },
+
+  // Get note statistics for dashboard
+  getNoteStats: async () => {
+    const response = await api.get("/notes/stats");
     return response.data;
   },
 };
