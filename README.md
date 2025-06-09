@@ -1,7 +1,3 @@
----
-title: Star-Note
----
-
 # Star-Note
 
 ## Tim Pengembang
