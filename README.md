@@ -448,7 +448,7 @@ VITE_CLOUDINARY_CLOUD_NAME=your-cloud-name
 
 ### Docker Configuration
 
-**docker-compose.yml**
+**docker-compose.override.yml**
 
 - Frontend: Port 80 (Nginx)
 - Backend: Port 5000 (Express)
@@ -471,7 +471,7 @@ VITE_CLOUDINARY_CLOUD_NAME=your-cloud-name
 © 2025 StarNote - K2 Group 6. Semua hak dilindungi undang-undang.
 
 **Proyek Sistem Basis Data - Semester 4, 2025**  
-Fakultas Teknk Universitas Indonesia
+Fakultas Teknik Universitas Indonesia
 
 ---
 
