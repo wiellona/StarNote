@@ -363,4 +363,72 @@ export const noteService = {
   },
 };
 
+// User API services
+export const userService = {
+  // Get current user details
+  getCurrentUser: async () => {
+    const userJson = localStorage.getItem("starnote-user");
+    const user = userJson ? JSON.parse(userJson) : null;
+    const userId = user ? user.id : null;
+
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const response = await api.get("/users/me", {
+      params: { user_id: userId },
+    });
+    return response.data;
+  },
+
+  // Update user profile
+  updateProfile: async (profileData) => {
+    const userJson = localStorage.getItem("starnote-user");
+    const user = userJson ? JSON.parse(userJson) : null;
+    const userId = user ? user.id : null;
+
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const response = await api.put("/users/profile", {
+      user_id: userId,
+      ...profileData,
+    });
+
+    // Update localStorage with new user data
+    const updatedUser = response.data.user;
+    localStorage.setItem("starnote-user", JSON.stringify(updatedUser));
+
+    return response.data;
+  },
+
+  // Upload profile picture
+  uploadProfilePicture: async (file) => {
+    const userJson = localStorage.getItem("starnote-user");
+    const user = userJson ? JSON.parse(userJson) : null;
+    const userId = user ? user.id : null;
+
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+    formData.append("user_id", userId);
+
+    const response = await api.post("/users/upload-profile-picture", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Update localStorage with new user data
+    const updatedUser = response.data.user;
+    localStorage.setItem("starnote-user", JSON.stringify(updatedUser));
+
+    return response.data;
+  },
+};
+
 export default api;
