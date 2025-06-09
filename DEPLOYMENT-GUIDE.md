@@ -71,9 +71,11 @@ docker-compose up -d
 Proses ini akan:
 
 1. Download image Docker yang diperlukan (Node.js, Nginx)
-2. Membangun images custom untuk frontend dan backend
-3. Membuat dan menjalankan container
-4. Membuat jaringan Docker untuk komunikasi antar container
+2. Membangun images custom untuk frontend dan backend secara aman
+3. Membuat dan menjalankan container dengan non-root user
+4. Mengonfigurasi health checks untuk monitoring
+5. Membuat jaringan Docker untuk komunikasi antar container
+6. Menyiapkan volume untuk persistent logs
 
 Waktu yang dibutuhkan tergantung pada kecepatan internet dan performa komputer, umumnya 5-10 menit untuk build pertama kali.
 
@@ -90,7 +92,17 @@ Output seharusnya menunjukkan dua container yang berjalan:
 - `starnote-backend`
 - `starnote-frontend`
 
-Keduanya harus memiliki status "Up".
+Keduanya harus memiliki status "Up" dan health status "healthy". Jika status menunjukkan "starting" atau "unhealthy", tunggu beberapa saat dan periksa lagi.
+
+Anda juga dapat memeriksa health endpoint secara langsung:
+
+```powershell
+# Periksa health backend
+curl http://localhost:5001/api/health
+
+# Periksa health frontend
+curl http://localhost/health
+```
 
 ### 5. Mengakses Aplikasi
 
