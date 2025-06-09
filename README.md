@@ -1,301 +1,482 @@
-# ✨ Star-Note
+---
+title: Star-Note
+---
 
-<div align="center">
-  <img src="./star-note-frontend/public/Logo.png" alt="Star-Note Logo" width="200" height="auto"/>
-  <p><em>Satu Aplikasi untuk Semua Kebutuhan Produktivitasmu</em></p>
-</div>
+# Star-Note
 
-## 📝 Ringkasan
+## Tim Pengembang
 
-**Star-Note** adalah platform all-in-one yang menggabungkan:
+**K2 Group 6 - Sistem Basis Data (Semester 4, 2025)**
 
-- 📒 Pengelolaan catatan dengan format kaya
-- 🃏 Flashcard untuk pembelajaran efektif
-- ⏱️ Timer Pomodoro untuk produktivitas
+| Foto                                                                                                                                 | Nama                            | NPM        |
+| ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- | ---------- |
+| <img src="https://i.imgur.com/4ZxvxWl.jpeg" alt="Wiellona" width="100" height="100" style="border-radius: 50%; object-fit: cover;"/> | Wiellona Darlene Oderia Saragih | 2306264396 |
+| <img src="https://i.imgur.com/drcd5aT.jpeg" alt="Kiara" width="100" height="100" style="border-radius: 50%; object-fit: cover;"/>    | Putri Kiara Salsabila Arief     | 2306250743 |
+| <img src="https://i.imgur.com/7dcKnNw.jpeg" alt="Laura" width="100" height="100" style="border-radius: 50%; object-fit: cover;"/>    | Laura Fawzia Sambowo            | 2306260145 |
 
-Dirancang untuk membantu Anda mengorganisasi pikiran, meningkatkan proses belajar, dan mengelola waktu secara efisien dalam satu aplikasi terpadu.
+## Daftar Isi
 
-## ✨ Fitur Utama
+- [Tim Pengembang](#tim-pengembang)
+- [Tentang StarNote](#tentang-starnote)
+- [Cara Menggunakan](#cara-menggunakan)
+- [Instalasi](#instalasi)
+- [Tech Stack](#tech-stack)
+- [Dokumentasi Teknis](#dokumentasi-teknis)
+- [Lisensi](#lisensi)
 
-<table>
-<tr>
-<td width="50%">
-    
-### 📒 Manajemen Catatan
-- ✅ Editor teks dengan format kaya (bold, italic, list, dll)
-- 🏷️ Organisasi dengan sistem tag
-- 🖼️ Dukungan upload gambar langsung ke catatan
-- 🔍 Pencarian cepat berdasarkan judul atau konten
-</td>
-<td width="50%">
-    
-### 🃏 Sistem Flashcard
-- 📚 Buat dan kelola flashcard untuk belajar efisien
-- 📁 Kategorisasi untuk organisasi yang lebih baik
-- 📊 Mode latihan dengan sistem spaced repetition
-- 🖼️ Dukungan gambar untuk visual learning
-</td>
-</tr>
-<tr>
-<td>
-    
-### ⏱️ Timer Pomodoro
-- 🍅 Teknik manajemen waktu Pomodoro terintegrasi
-- 📈 Statistik sesi untuk analisis produktivitas
-- 🔔 Notifikasi pergantian sesi otomatis
-- ⚙️ Durasi kerja dan istirahat yang dapat disesuaikan
-</td>
-<td>
-    
-### ☁️ Integrasi Cloud
-- 🌐 Penyimpanan gambar via Cloudinary
-- 🖱️ Upload dengan drag-and-drop
-- 👁️ Preview gambar sebelum upload
-- 🔄 Sinkronisasi data real-time
-</td>
-</tr>
-</table>
+---
 
-## 🛠️ Teknologi Yang Digunakan
+## Tentang StarNote
 
-<div align="center">
-<table>
-<tr>
-<th>Frontend</th>
-<th>Backend</th>
-<th>Infrastructure</th>
-</tr>
-<tr>
-<td>
+**StarNote** adalah aplikasi web produktivitas yang mengintegrasikan tiga modul utama untuk mendukung kegiatan akademik mahasiswa: manajemen catatan digital, sistem flashcard pembelajaran, dan timer Pomodoro untuk manajemen waktu. Aplikasi ini dibangun dengan teknologi modern React.js dan Node.js dengan database MongoDB.
 
-- <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"/> React.js
-- <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"/> Vite
-- <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind"/> Tailwind CSS
-- <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white" alt="Axios"/> Axios
-- <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx"/> Nginx
+### Fitur Utama
 
-</td>
-<td>
+**Manajemen Catatan**
 
-- <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js"/> Node.js
-- <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express"/> Express.js
-- <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB"/> MongoDB
-- <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=json-web-tokens&logoColor=white" alt="JWT"/> JWT Auth
-- <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=flat-square&logo=cloudinary&logoColor=white" alt="Cloudinary"/> Cloudinary
+- Editor teks lengkap dengan format styling
+- Upload dan integrasi gambar
+- Sistem organisasi dengan tag
+- Pencarian berdasarkan judul, konten, atau tag
+- Penyimpanan otomatis
+- Export ke PDF
 
-</td>
-<td>
+**Sistem Flashcard**
 
-- <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"/> Docker & Compose
-- <img src="https://img.shields.io/badge/RESTful-009688?style=flat-square&logo=fastapi&logoColor=white" alt="REST"/> RESTful API
-- <img src="https://img.shields.io/badge/Security-4B5563?style=flat-square&logo=shield&logoColor=white" alt="Security"/> Non-root security
-- <img src="https://img.shields.io/badge/Health Checks-22C55E?style=flat-square&logo=checkmarx&logoColor=white" alt="Health"/> Health monitoring
-- <img src="https://img.shields.io/badge/Logging-2E7D32?style=flat-square&logo=logtail&logoColor=white" alt="Logging"/> Persistent logs
+- Kartu pembelajaran dengan dukungan teks dan gambar
+- Organisasi berdasarkan kategori mata pelajaran
+- Mode latihan dengan algoritma pengulangan
+- Tracking progress dan statistik pembelajaran
+- Import/export data flashcard
 
-</td>
-</tr>
-</table>
-</div>
+**Timer Pomodoro**
 
-## 🚀 Cara Menjalankan Aplikasi
+- Sesi kerja dan istirahat yang dapat disesuaikan
+- Notifikasi otomatis
+- Statistik produktivitas harian dan mingguan
+- Integrasi dengan catatan dan flashcard yang sedang dipelajari
 
-### Prasyarat
+**Keamanan dan Profil**
 
-<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"/> **Docker & Docker Compose** - [Download di sini](https://www.docker.com/products/docker-desktop/)  
-<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git"/> **Git** - Opsional untuk clone repository
+- Sistem autentikasi aman dengan JWT
+- Profil pengguna dengan foto
+- Data pribadi yang terlindungi
+- Penyimpanan cloud untuk gambar
 
-### 🐳 Instalasi dengan Docker (Direkomendasikan)
+---
 
-<details>
-<summary><b>Klik untuk melihat langkah-langkah instalasi</b></summary>
+## Cara Menggunakan
 
-#### 1️⃣ Dapatkan Kode Aplikasi
+### Akses Aplikasi
 
-```bash
-# Clone repositori (atau unduh sebagai ZIP)
-git clone <repository-url>
-cd Star-Note
-```
+1. Buka browser dan kunjungi alamat aplikasi![image](https://hackmd.io/_uploads/SJfiXJ4mll.png)
+2. Daftar akun baru atau login dengan akun yang sudah ada ![image](https://hackmd.io/_uploads/HyBpm1N7ge.png)
+3. Mulai menggunakan fitur-fitur yang tersedia
 
-#### 2️⃣ Jalankan dengan Docker Compose
+### Memulai dengan Catatan
 
-```bash
-# Build dan jalankan container
-docker-compose up -d
-```
+1. Klik menu "Notes" di navigasi utama![image](https://hackmd.io/_uploads/ryk4NJV7lx.png)
+2. Tekan tombol "New Note" untuk membuat catatan baru ![image](https://hackmd.io/_uploads/Sy8HNJNQxl.png)
 
-#### 3️⃣ Verifikasi Aplikasi Berjalan
+3. Tulis judul dan konten catatan
+4. Gunakan toolbar untuk format teks atau upload gambar
+5. Tambahkan tag untuk organisasi yang lebih baik
+6. Tekan tombol save untuk menyimpan catatan ![image](https://hackmd.io/_uploads/HJDtNJ4Qle.png)
 
-```bash
-# Cek status container
-docker-compose ps
+### Menggunakan Flashcard
 
-# Cek health status backend
-curl http://localhost:5001/api/health
-```
+1. Pilih menu "Flashcard" ![image](https://hackmd.io/_uploads/H1Wo414Qll.png)
 
-#### 4️⃣ Akses Aplikasi
+2. Tekan tombol New Card untuk membuat kartu baru ![image](https://hackmd.io/_uploads/BkHAVy4Qgg.png)
 
-- 🖥️ **Frontend**: [http://localhost](http://localhost)
-- 🔌 **API Backend**: [http://localhost:5001/api](http://localhost:5001/api)
+3. Tambah kartu baru dengan memilih kategori dan mengisi pertanyaan dan jawaban. Tekan tombon save untuk menyimpan kartu ![image](https://hackmd.io/_uploads/rkSQrJV7gg.png)
 
-#### 5️⃣ Menghentikan Aplikasi
+4. Mulai sesi belajar dengan Study Mode ![image](https://hackmd.io/_uploads/HJFBBJVmel.png)
 
-```bash
-docker-compose down
-```
-
-</details>
-
-### 🧪 Mode Pengembangan
-
-<details>
-<summary><b>Klik untuk melihat mode pengembangan</b></summary>
-
-Untuk developer yang ingin menjalankan dengan hot-reload:
-
-```bash
-# Jalankan dalam mode development
-docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
-```
-
-Akses:
-
-- Frontend dev server: [http://localhost:5173](http://localhost:5173)
-- Backend API: [http://localhost:5001/api](http://localhost:5001/api)
-</details>
-
-### 🌐 Demo Online
-
-<p align="center">
-<a href="#"><img src="https://img.shields.io/badge/Demo Online-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Demo"/></a>
-</p>
-
-> Demo akan tersedia setelah aplikasi dirilis
-
-## Cara Penggunaan Aplikasi
-
-### Registrasi dan Login
-
-1. Buka aplikasi di browser dan klik "Register" untuk membuat akun baru
-2. Isi username, email, dan password
-3. Setelah registrasi berhasil, login dengan email dan password Anda
-
-### Pengelolaan Catatan
-
-1. Setelah login, navigasi ke menu "Notes"
-2. Klik tombol "New Note" untuk membuat catatan baru
-3. Isi judul dan konten catatan
-4. Gunakan toolbar formatting untuk mengedit teks
-5. Tambahkan tag jika diperlukan
-6. Klik "Save" untuk menyimpan catatan
-
-### Flashcard
-
-1. Navigasi ke menu "Flashcards"
-2. Klik "Create Flashcard" untuk membuat flashcard baru
-3. Isi bagian depan (pertanyaan) dan belakang (jawaban) kartu
-4. Pilih kategori atau buat kategori baru
-5. Tambahkan gambar jika diperlukan
-6. Klik "Save" untuk menyimpan flashcard
-7. Gunakan mode "Practice" untuk berlatih dengan flashcard
+   ![image](https://hackmd.io/_uploads/rJs8SyEQlx.png)
+   ![image](https://hackmd.io/_uploads/BymPBJN7ge.png)
 
 ### Timer Pomodoro
 
-1. Navigasi ke menu "Pomodoro"
-2. Atur durasi sesi kerja dan istirahat
-3. Klik "Start" untuk memulai timer
-4. Timer akan otomatis beralih antara sesi kerja dan istirahat
-5. Lihat statistik penggunaan di bagian bawah halaman
+1. Akses menu "Pomodoro" untuk membantu Anda menerapkan Teknik Pomodoro ![image](https://hackmd.io/_uploads/ryh2H1E7xx.png)
 
-## Pengembangan
+2. Atur durasi sesi kerja dan istirahat sesuai kebutuhan ![image](https://hackmd.io/_uploads/S19aH14mxx.png)
 
-### Struktur Project
+---
 
+## Instalasi
+
+### Prasyarat Sistem
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (disarankan)
+- [Git](https://git-scm.com/) untuk mengunduh kode
+- Koneksi internet untuk akses database dan penyimpanan gambar
+
+### Instalasi dengan Docker (Disarankan)
+
+1. **Unduh Aplikasi**
+
+   ```bash
+   git clone https://github.com/yourusername/StarNote.git
+   cd StarNote
+   ```
+
+2. **Jalankan Aplikasi**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Verifikasi Instalasi**
+
+   ```bash
+   docker-compose ps
+   ```
+
+4. **Akses Aplikasi**
+
+   - **Aplikasi Utama**: http://localhost
+   - **API Backend**: http://localhost:5000/api
+   - **Status Sistem**: http://localhost:5000/api/health
+
+5. **Hentikan Aplikasi**
+   ```bash
+   docker-compose down
+   ```
+
+### Instalasi Manual (Development)
+
+Jika ingin mengembangkan atau memodifikasi aplikasi:
+
+1. **Setup Backend**
+
+   ```bash
+   cd star-note-backend
+   npm install
+   ```
+
+   Buat file `.env` dengan konfigurasi berikut:
+
+   ```
+   MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/note-app
+    JWT_SECRET=secret_key_yang_sangat_kuat
+    PORT=5000
+    CLOUDINARY_CLOUD_NAME=nama_cloud_anda
+    CLOUDINARY_API_KEY=api_key_anda
+    CLOUDINARY_API_SECRET=api_secret_anda
+   ```
+
+   Jalankan server:
+
+   ```bash
+   npm start
+   ```
+
+2. **Setup Frontend**
+
+   ```bash
+   cd star-note-frontend
+   npm install
+   ```
+
+   Buat file `.env`:
+
+   ```
+   VITE_API_URL=http://localhost:5000/api
+   VITE_CLOUDINARY_CLOUD_NAME=nama_cloud_anda
+   ```
+
+   Jalankan aplikasi:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Akses Aplikasi**
+   - **Frontend**: http://localhost:5173
+   - **Backend**: http://localhost:5000
+
+---
+
+### Debugging dan Log
+
+**Melihat Log Aplikasi:**
+
+```bash
+# Semua log
+docker-compose logs
+
+# Log backend saja
+docker-compose logs backend
+
+# Log frontend saja
+docker-compose logs frontend
+
+# Follow log secara real-time
+docker-compose logs -f
 ```
-Star-Note/
-├── docker-compose.yml         # Konfigurasi Docker Compose
-├── be-star-note/              # Backend aplikasi
-│   ├── Dockerfile             # Docker config untuk backend
-│   ├── server.js              # Entry point backend
-│   ├── config/                # Konfigurasi aplikasi
-│   ├── middleware/            # Express middleware
-│   ├── models/                # Model database MongoDB
-│   └── routes/                # API routes
-│
-└── star-note-frontend/        # Frontend aplikasi
-    ├── Dockerfile             # Docker config untuk frontend
-    ├── nginx.conf             # Konfigurasi Nginx
-    ├── src/                   # Source code React
-    │   ├── components/        # Reusable components
-    │   ├── contexts/          # React contexts
-    │   ├── pages/             # Page components
-    │   └── utils/             # Utility functions
-    └── public/                # Static assets
-```
 
-### Endpoint API
+**Restart Aplikasi:**
 
-#### Authentication
-
-- `POST /api/users/register` - Registrasi user baru
-- `POST /api/users/login` - Login user
-
-#### Notes
-
-- `GET /api/notes` - Ambil semua catatan user
-- `POST /api/notes` - Buat catatan baru
-- `GET /api/notes/:id` - Ambil detail catatan berdasarkan ID
-- `PUT /api/notes/:id` - Update catatan
-- `DELETE /api/notes/:id` - Hapus catatan
-
-#### Flashcards
-
-- `GET /api/flashcards` - Ambil semua flashcard user
-- `POST /api/flashcards` - Buat flashcard baru
-- `GET /api/flashcards/:id` - Ambil detail flashcard berdasarkan ID
-- `PUT /api/flashcards/:id` - Update flashcard
-- `DELETE /api/flashcards/:id` - Hapus flashcard
-
-#### Pomodoro
-
-- `GET /api/pomodoro` - Ambil pengaturan dan statistik pomodoro
-- `POST /api/pomodoro` - Simpan sesi pomodoro baru
-- `PUT /api/pomodoro/settings` - Update pengaturan pomodoro
-
-## Troubleshooting
-
-### Masalah Umum
-
-1. **Tidak dapat mengakses aplikasi di browser**
-
-   - Pastikan container Docker berjalan dengan perintah `docker-compose ps`
-   - Cek apakah port 80 dan 5001 tidak digunakan oleh aplikasi lain di komputer Anda
-   - Coba akses backend API langsung di http://localhost:5001/api/health
-
-2. **Login atau register gagal**
-
-   - Pastikan koneksi internet aktif karena aplikasi menggunakan MongoDB Atlas cloud
-   - Periksa apakah email sudah terdaftar sebelumnya
-
-3. **Gambar tidak dapat diupload**
-
-   - Pastikan koneksi internet aktif karena upload gambar menggunakan Cloudinary
-   - Periksa ukuran file, maksimal 10MB per gambar
-
-4. **Container Docker gagal memulai**
-   - Jalankan `docker-compose logs` untuk melihat detail error
-   - Pastikan tidak ada container lain yang menggunakan port yang sama
-
-### Restart Aplikasi
-
-Jika mengalami masalah, coba restart container:
-
-```
+```bash
 docker-compose down
 docker-compose up -d
 ```
 
+**Reset Data (hati-hati):**
+
+```bash
+docker-compose down -v
+docker-compose up -d
+```
+
+### Bantuan Teknis
+
+Jika masalah berlanjut, periksa:
+
+1. Status layanan cloud (MongoDB Atlas, Cloudinary)
+2. Konfigurasi firewall atau antivirus
+3. Resource sistem (RAM, storage)
+4. Koneksi internet yang stabil
+
+---
+
+## Tech Stack
+
+<div align="center">
+
+### 🚀 **Modern Full-Stack Architecture**
+
+</div>
+
+<table align="center">
+<tr>
+<td align="center" width="50%">
+
+### 🎨 **Frontend Excellence**
+
+![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4.17-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+**🔧 Core Libraries:**
+![React Router](https://img.shields.io/badge/React_Router-7.6.0-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1.9.0-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![React Icons](https://img.shields.io/badge/React_Icons-5.5.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary_React-1.14.3-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
+
+</td>
+<td align="center" width="50%">
+
+### ⚡ **Backend Power**
+
+![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.1.0-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-6.16.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-9.0.2-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+
+**🛡️ Security & Utils:**
+![Mongoose](https://img.shields.io/badge/Mongoose-8.14.1-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+![bcryptjs](https://img.shields.io/badge/bcryptjs-3.0.2-4285F4?style=for-the-badge&logo=security&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-1.4.5-FF6B6B?style=for-the-badge&logo=files&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-2.6.1-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
+
+</td>
+</tr>
+</table>
+
+---
+
+### 🏗️ **Infrastructure & DevOps**
+
+<div align="center">
+
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-Web_Server-009639?style=for-the-badge&logo=nginx&logoColor=white)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-Cloud_DB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-CDN-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
+
+</div>
+
+| Component               | Technology              | Purpose                               |
+| ----------------------- | ----------------------- | ------------------------------------- |
+| **🐳 Containerization** | Docker & Docker Compose | Development & deployment consistency  |
+| **🌐 Web Server**       | Nginx                   | High-performance static file serving  |
+| **☁️ Database**         | MongoDB Atlas           | Scalable cloud database hosting       |
+| **📸 Media CDN**        | Cloudinary              | Optimized image delivery & processing |
+
+---
+
+### 🎯 **Architecture Overview**
+
+![picture 3](https://i.imgur.com/9YugCm2.png)
+
+**🏗️ System Architecture Flow:**
+
+1. **🌐 Client Access** → User accesses via browser
+2. **🐳 Docker Container** → Nginx serves React frontend
+3. **⚡ Frontend Processing** → React handles UI/UX with routing
+4. **🔄 API Communication** → Axios makes HTTP requests
+5. **🛡️ Security Layer** → JWT authentication & file validation
+6. **📊 Data Processing** → Express routes handle business logic
+7. **💾 Data Persistence** → MongoDB Atlas stores all data
+8. **☁️ Media Storage** → Cloudinary manages images & files
+
+**🔧 Port Configuration:**
+
+- **Frontend (Nginx)**: Port 80
+- **Backend (Express)**: Port 5000
+- **Database**: MongoDB Atlas (Cloud)
+- **CDN**: Cloudinary (Cloud)
+
+**🔥 Key Features:**
+
+- **Microservices Ready** - Containerized architecture for scalability
+- **Cloud-First** - MongoDB Atlas + Cloudinary integration
+- **Modern Stack** - Latest React 19 with Vite for lightning-fast development
+- **Security Focused** - JWT authentication with encrypted passwords
+- **Performance Optimized** - Nginx proxy with CDN delivery
+
+### API Endpoints
+
+**Authentication**
+
+- `POST /api/users/register` - Registrasi user baru
+- `POST /api/users/login` - Login user
+- `GET /api/users/profile` - Profil user
+- `PUT /api/users/profile` - Update profil
+
+**Notes Management**
+
+- `GET /api/notes` - Ambil semua catatan user
+- `POST /api/notes` - Buat catatan baru
+- `GET /api/notes/:id` - Ambil catatan spesifik
+- `PUT /api/notes/:id` - Update catatan
+- `DELETE /api/notes/:id` - Hapus catatan
+
+**Flashcards**
+
+- `GET /api/flashcards` - Ambil semua flashcard
+- `POST /api/flashcards` - Buat flashcard baru
+- `PUT /api/flashcards/:id` - Update flashcard
+- `DELETE /api/flashcards/:id` - Hapus flashcard
+
+**Pomodoro Timer**
+
+- `GET /api/pomodoro` - Ambil sesi Pomodoro
+- `POST /api/pomodoro` - Buat sesi baru
+- `PUT /api/pomodoro/:id` - Update sesi
+
+### Database Schema
+
+**Users Collection**
+
+```javascript
+{
+  _id: ObjectId,
+  username: String (required, unique),
+  email: String (required, unique),
+  password: String (required, hashed),
+  profileImage: String,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**Notes Collection**
+
+```javascript
+{
+  _id: ObjectId,
+  title: String (required),
+  content: String (required),
+  tags: [String],
+  userId: ObjectId (ref: User),
+  images: [String],
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**Flashcards Collection**
+
+```javascript
+{
+  _id: ObjectId,
+  front: String (required),
+  back: String (required),
+  category: String,
+  difficulty: Number,
+  userId: ObjectId (ref: User),
+  frontImage: String,
+  backImage: String,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**PomodoroTimer Collection**
+
+```javascript
+{
+  _id: ObjectId,
+  userId: ObjectId (ref: User),
+  workDuration: Number,
+  breakDuration: Number,
+  sessionsCompleted: Number,
+  date: Date,
+  createdAt: Date
+}
+```
+
+### Environment Variables
+
+**Backend (.env)**
+
+```
+MONGO_URI=mongodb+srv://...
+JWT_SECRET=your-secret-key
+PORT=5000
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
+
+**Frontend (.env)**
+
+```
+VITE_API_URL=http://localhost:5000/api
+VITE_CLOUDINARY_CLOUD_NAME=your-cloud-name
+```
+
+### Docker Configuration
+
+**docker-compose.yml**
+
+- Frontend: Port 80 (Nginx)
+- Backend: Port 5000 (Express)
+- Database: MongoDB Atlas (cloud)
+- Media: Cloudinary (cloud)
+
+### Keamanan
+
+- Password hashing dengan bcrypt
+- JWT token authentication
+- CORS configuration
+- Input validation dan sanitization
+- File upload restrictions
+- Environment variables untuk sensitive data
+
+---
+
 ## Lisensi
 
-© 2025 StarNote K2 Group 6. All rights reserved.
+© 2025 StarNote - K2 Group 6. Semua hak dilindungi undang-undang.
+
+**Proyek Sistem Basis Data - Semester 4, 2025**  
+Fakultas Ilmu Komputer, Universitas Indonesia
+
+---
+
+_Aplikasi ini dikembangkan sebagai tugas mata kuliah Sistem Basis Data dengan tujuan pembelajaran dan implementasi konsep database dalam aplikasi web modern._
