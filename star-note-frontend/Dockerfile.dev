@@ -1,0 +1,21 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files first to leverage Docker cache
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Environment variable for the API URL
+ENV VITE_API_URL=http://localhost:5001/api
+
+# Expose port for Vite dev server
+EXPOSE 5173
+
+# Start the app in development mode
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

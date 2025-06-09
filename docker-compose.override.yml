@@ -1,0 +1,32 @@
+version: "3.8"
+
+# This override file is used for development environments
+services:
+  backend:
+    # Use a different build configuration for development
+    build:
+      context: ./star-note-backend
+      dockerfile: Dockerfile.dev
+    environment:
+      - NODE_ENV=development
+    # Mount the source code as a volume for hot reloading
+    volumes:
+      - ./star-note-backend:/app
+      - /app/node_modules
+    command: npm run dev
+
+  frontend:
+    # Use a different build configuration for development
+    build:
+      context: ./star-note-frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      - NODE_ENV=development
+    # Mount the source code as a volume for hot reloading
+    volumes:
+      - ./star-note-frontend:/app
+      - /app/node_modules
+    command: npm run dev
+    # Map Vite dev server port
+    ports:
+      - "5173:5173"

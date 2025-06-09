@@ -1,109 +1,177 @@
-# Star-Note
+# ✨ Star-Note
 
-![Star-Note Logo](./star-note-frontend/public/Logo.png)
+<div align="center">
+  <img src="./star-note-frontend/public/Logo.png" alt="Star-Note Logo" width="200" height="auto"/>
+  <p><em>Satu Aplikasi untuk Semua Kebutuhan Produktivitasmu</em></p>
+</div>
 
-## Deskripsi
+## 📝 Ringkasan
 
-Star-Note adalah aplikasi all-in-one untuk pengelolaan catatan, flashcard untuk pembelajaran, dan timer pomodoro untuk meningkatkan produktivitas. Aplikasi ini dirancang untuk memudahkan pengguna dalam mengorganisir pikiran, meningkatkan proses belajar, dan mengelola waktu dengan lebih efektif.
+**Star-Note** adalah platform all-in-one yang menggabungkan:
 
-## Fitur
+- 📒 Pengelolaan catatan dengan format kaya
+- 🃏 Flashcard untuk pembelajaran efektif
+- ⏱️ Timer Pomodoro untuk produktivitas
 
-### 1. Manajemen Catatan
+Dirancang untuk membantu Anda mengorganisasi pikiran, meningkatkan proses belajar, dan mengelola waktu secara efisien dalam satu aplikasi terpadu.
 
-- Buat, edit, dan hapus catatan dengan rich text formatting
-- Organisasi catatan dengan tag
-- Unggah dan lampirkan gambar pada catatan
-- Cari catatan berdasarkan judul atau konten
+## ✨ Fitur Utama
 
-### 2. Flashcard untuk Pembelajaran
+<table>
+<tr>
+<td width="50%">
+    
+### 📒 Manajemen Catatan
+- ✅ Editor teks dengan format kaya (bold, italic, list, dll)
+- 🏷️ Organisasi dengan sistem tag
+- 🖼️ Dukungan upload gambar langsung ke catatan
+- 🔍 Pencarian cepat berdasarkan judul atau konten
+</td>
+<td width="50%">
+    
+### 🃏 Sistem Flashcard
+- 📚 Buat dan kelola flashcard untuk belajar efisien
+- 📁 Kategorisasi untuk organisasi yang lebih baik
+- 📊 Mode latihan dengan sistem spaced repetition
+- 🖼️ Dukungan gambar untuk visual learning
+</td>
+</tr>
+<tr>
+<td>
+    
+### ⏱️ Timer Pomodoro
+- 🍅 Teknik manajemen waktu Pomodoro terintegrasi
+- 📈 Statistik sesi untuk analisis produktivitas
+- 🔔 Notifikasi pergantian sesi otomatis
+- ⚙️ Durasi kerja dan istirahat yang dapat disesuaikan
+</td>
+<td>
+    
+### ☁️ Integrasi Cloud
+- 🌐 Penyimpanan gambar via Cloudinary
+- 🖱️ Upload dengan drag-and-drop
+- 👁️ Preview gambar sebelum upload
+- 🔄 Sinkronisasi data real-time
+</td>
+</tr>
+</table>
 
-- Buat kartu flashcard untuk membantu proses belajar
-- Organisasi flashcard berdasarkan kategori
-- Mode latihan dengan sistem pengulangan berdasarkan tingkat penguasaan
-- Lampirkan gambar pada flashcard
+## 🛠️ Teknologi Yang Digunakan
 
-### 3. Timer Pomodoro
+<div align="center">
+<table>
+<tr>
+<th>Frontend</th>
+<th>Backend</th>
+<th>Infrastructure</th>
+</tr>
+<tr>
+<td>
 
-- Atur sesi kerja dan istirahat dengan timer pomodoro
-- Statistik penggunaan untuk melacak produktivitas
-- Notifikasi untuk pergantian antara sesi kerja dan istirahat
-- Pengaturan durasi yang dapat disesuaikan
+- <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"/> React.js
+- <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"/> Vite
+- <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind"/> Tailwind CSS
+- <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white" alt="Axios"/> Axios
+- <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx"/> Nginx
 
-### 4. Integrasi dengan Cloudinary
+</td>
+<td>
 
-- Penyimpanan dan pengelolaan gambar melalui Cloudinary
-- Upload gambar dengan drag-and-drop
-- Preview gambar sebelum upload
+- <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js"/> Node.js
+- <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express"/> Express.js
+- <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB"/> MongoDB
+- <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=json-web-tokens&logoColor=white" alt="JWT"/> JWT Auth
+- <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=flat-square&logo=cloudinary&logoColor=white" alt="Cloudinary"/> Cloudinary
 
-## Tech Stack
+</td>
+<td>
 
-### Frontend
+- <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"/> Docker & Compose
+- <img src="https://img.shields.io/badge/RESTful-009688?style=flat-square&logo=fastapi&logoColor=white" alt="REST"/> RESTful API
+- <img src="https://img.shields.io/badge/Security-4B5563?style=flat-square&logo=shield&logoColor=white" alt="Security"/> Non-root security
+- <img src="https://img.shields.io/badge/Health Checks-22C55E?style=flat-square&logo=checkmarx&logoColor=white" alt="Health"/> Health monitoring
+- <img src="https://img.shields.io/badge/Logging-2E7D32?style=flat-square&logo=logtail&logoColor=white" alt="Logging"/> Persistent logs
 
-- React.js
-- Vite
-- Tailwind CSS
-- Axios untuk API calls
-- Nginx (untuk serving static files dalam container)
+</td>
+</tr>
+</table>
+</div>
 
-### Backend
-
-- Node.js
-- Express.js
-- MongoDB (database)
-- JWT untuk autentikasi
-- Cloudinary API untuk penyimpanan gambar
-
-### Infrastructure
-
-- Docker & Docker Compose untuk containerization
-- RESTful API architecture
-
-## Cara Menjalankan Aplikasi
+## 🚀 Cara Menjalankan Aplikasi
 
 ### Prasyarat
 
-- [Docker](https://www.docker.com/products/docker-desktop/) dan Docker Compose terinstal di komputer Anda
-- Git untuk mengkloning repository (opsional)
+<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"/> **Docker & Docker Compose** - [Download di sini](https://www.docker.com/products/docker-desktop/)  
+<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git"/> **Git** - Opsional untuk clone repository
 
-### Langkah-langkah untuk Client
+### 🐳 Instalasi dengan Docker (Direkomendasikan)
 
-#### Opsi 1: Menjalankan dengan Docker Compose
+<details>
+<summary><b>Klik untuk melihat langkah-langkah instalasi</b></summary>
 
-1. Unduh atau clone repository ini ke komputer lokal:
+#### 1️⃣ Dapatkan Kode Aplikasi
 
-   ```
-   git clone <repository-url>
-   ```
+```bash
+# Clone repositori (atau unduh sebagai ZIP)
+git clone <repository-url>
+cd Star-Note
+```
 
-   atau unduh sebagai ZIP dan extract ke folder lokal
+#### 2️⃣ Jalankan dengan Docker Compose
 
-2. Buka terminal atau command prompt dan arahkan ke folder Star-Note:
+```bash
+# Build dan jalankan container
+docker-compose up -d
+```
 
-   ```
-   cd path/to/Star-Note
-   ```
+#### 3️⃣ Verifikasi Aplikasi Berjalan
 
-3. Jalankan aplikasi dengan Docker Compose:
+```bash
+# Cek status container
+docker-compose ps
 
-   ```
-   docker-compose up -d
-   ```
+# Cek health status backend
+curl http://localhost:5001/api/health
+```
 
-   Perintah ini akan membangun dan menjalankan container untuk frontend dan backend aplikasi.
+#### 4️⃣ Akses Aplikasi
 
-4. Tunggu beberapa saat hingga proses build selesai. Setelah selesai, buka browser dan akses:
+- 🖥️ **Frontend**: [http://localhost](http://localhost)
+- 🔌 **API Backend**: [http://localhost:5001/api](http://localhost:5001/api)
 
-   - Frontend: http://localhost
-   - Backend API: http://localhost:5001/api
+#### 5️⃣ Menghentikan Aplikasi
 
-5. Untuk menghentikan aplikasi:
-   ```
-   docker-compose down
-   ```
+```bash
+docker-compose down
+```
 
-#### Opsi 2: Akses Demo Online (Jika Tersedia)
+</details>
 
-- Akses aplikasi online di: [URL Demo] (akan ditambahkan jika tersedia)
+### 🧪 Mode Pengembangan
+
+<details>
+<summary><b>Klik untuk melihat mode pengembangan</b></summary>
+
+Untuk developer yang ingin menjalankan dengan hot-reload:
+
+```bash
+# Jalankan dalam mode development
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+```
+
+Akses:
+
+- Frontend dev server: [http://localhost:5173](http://localhost:5173)
+- Backend API: [http://localhost:5001/api](http://localhost:5001/api)
+</details>
+
+### 🌐 Demo Online
+
+<p align="center">
+<a href="#"><img src="https://img.shields.io/badge/Demo Online-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Demo"/></a>
+</p>
+
+> Demo akan tersedia setelah aplikasi dirilis
 
 ## Cara Penggunaan Aplikasi
 

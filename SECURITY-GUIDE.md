@@ -78,6 +78,32 @@ services:
 
 ## Keamanan Aplikasi
 
+### Docker Security
+
+Aplikasi yang telah di-dockerize memiliki keamanan tambahan:
+
+1. **Non-Root User**:
+
+   - Container backend berjalan sebagai user `node` (bukan root)
+   - Container frontend berjalan sebagai user `nginx` (bukan root)
+
+2. **Health Checks**:
+
+   - Backend dan frontend memiliki health check untuk monitoring kondisi container
+   - Gunakan `docker-compose ps` untuk memeriksa status health container
+
+3. **Resource Limits**:
+   - Untuk produksi, tambahkan batasan resource di docker-compose.yml:
+     ```yaml
+     services:
+       backend:
+         deploy:
+           resources:
+             limits:
+               cpus: "0.5"
+               memory: "500M"
+     ```
+
 ### HTTPS
 
 Secara default, aplikasi berjalan menggunakan HTTP. Untuk deployment produksi, sangat direkomendasikan untuk mengaktifkan HTTPS.
@@ -193,6 +219,11 @@ Sebelum membuka aplikasi untuk akses publik, pastikan:
 - [ ] Monitoring dan alerting dikonfigurasi
 - [ ] Batas upload file diatur dengan wajar
 - [ ] Password policy diterapkan (minimal 8 karakter, kombinasi huruf dan angka)
+- [ ] Container Docker dijalankan dengan non-root user
+- [ ] Health checks Docker dikonfigurasi dan berfungsi
+- [ ] Docker images diperbarui ke versi terbaru untuk patch keamanan
+- [ ] Batasan resource Docker dikonfigurasi untuk mencegah DoS
+- [ ] Headers keamanan di Nginx sudah dikonfigurasi
 
 ## Lisensi
 
