@@ -471,7 +471,7 @@ VITE_CLOUDINARY_CLOUD_NAME=your-cloud-name
 © 2025 StarNote - K2 Group 6. Semua hak dilindungi undang-undang.
 
 **Proyek Sistem Basis Data - Semester 4, 2025**  
-Fakultas Ilmu Komputer, Universitas Indonesia
+Fakultas Teknk Universitas Indonesia
 
 ---
 
