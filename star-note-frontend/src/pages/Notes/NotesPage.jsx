@@ -45,15 +45,17 @@ const NotesPage = ({ isAuthenticated }) => {
     if (!isAuthenticated) {
       navigate("/auth");
     }
-  }, [isAuthenticated, navigate]);
-  // Fetch notes from API
+  }, [isAuthenticated, navigate]); // Fetch notes from API
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        // Verify if userId exists in localStorage
-        const userId = localStorage.getItem("userId");
+        // Verify if user exists in localStorage
+        const userJson = localStorage.getItem("starnote-user");
+        const user = userJson ? JSON.parse(userJson) : null;
+        const userId = user ? user.id : null;
+
         if (!userId) {
-          console.error("No userId found in localStorage");
+          console.error("No user ID found in localStorage");
           toast.error("User ID not found. Please log in again.");
           return;
         }
@@ -225,7 +227,10 @@ const NotesPage = ({ isAuthenticated }) => {
     }
 
     // Verify the user ID exists
-    const userId = localStorage.getItem("userId");
+    const userJson = localStorage.getItem("starnote-user");
+    const user = userJson ? JSON.parse(userJson) : null;
+    const userId = user ? user.id : null;
+
     if (!userId) {
       toast.error("User ID not found. Please log in again.");
       navigate("/auth");
